@@ -56,4 +56,6 @@ private:
 
   UPROPERTY(EditAnywhere, Category = Input)
   FVector WorldDirection = GetActorForwardVector();
+
+  bool CheckIntention() const;
 };

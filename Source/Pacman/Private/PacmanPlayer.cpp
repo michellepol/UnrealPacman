@@ -53,11 +53,6 @@ void APacmanPlayer::SetupPlayerInputComponent(
 }
 
 void APacmanPlayer::MoveX(const FInputActionInstance &Instance) {
-  // FVector VectorValue = Instance.GetValue().Get<FVector>();
-  // FVector2D 2DAxisValue = Instance.GetValue().Get<FVector2D>();
-  // float FloatValue = Instance.GetValue().Get<float>();
-  // bool BoolValue = Instance.GetValue().Get<bool>();
-
   float Direction = Instance.GetValue().Get<float>();
 
   Sign = -Direction;
@@ -75,5 +70,10 @@ void APacmanPlayer::MoveY(const FInputActionInstance &Instance) {
 void APacmanPlayer::Tick(float DeltaTime) {
   Super::Tick(DeltaTime);
 
-  AddMovementInput(WorldDirection, Sign * Speed);
+  // To do if direction is clear
+  if (CheckIntention()) {
+    AddMovementInput(WorldDirection, Sign * Speed);
+  }
 }
+
+bool APacmanPlayer::CheckIntention() const { return true; }

@@ -6,8 +6,6 @@
 #include "Components/StaticMeshComponent.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/StaticMesh.h"
-#include "SceneTypes.h"
-#include "UObject/ScriptDelegateFwd.h"
 
 // Sets default values
 ABasePickupActor::ABasePickupActor() {
@@ -33,6 +31,7 @@ ABasePickupActor::ABasePickupActor() {
 
   StaticMeshComponent =
       CreateDefaultSubobject<UStaticMeshComponent>("MeshComponent");
+  StaticMeshComponent->SetWorldScale3D(FVector(Scale));
   StaticMeshComponent->SetupAttachment(CollisionComponent);
 }
 
@@ -42,11 +41,6 @@ void ABasePickupActor::BeginPlay() {
 
   check(CollisionComponent);
   check(StaticMeshComponent);
-
-  StaticMeshComponent->SetStaticMesh(StaticMesh);
-  StaticMeshComponent->SetMaterial(0, Material);
-  StaticMeshComponent->SetWorldScale3D(FVector(Scale));
-  StaticMeshComponent->SetRelativeLocation(FVector(0.0));
 }
 
 // Called every frame

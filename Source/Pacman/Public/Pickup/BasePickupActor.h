@@ -29,17 +29,13 @@ protected:
   virtual void ApplyAction();
 
   class USphereComponent *CollisionComponent = nullptr;
+
+  UPROPERTY(EditDefaultsOnly)
   class UStaticMeshComponent *StaticMeshComponent = nullptr;
 
 public:
   // Called every frame
   virtual void Tick(float DeltaTime) override;
-
-  UPROPERTY(EditAnywhere)
-  class UStaticMesh *StaticMesh = nullptr;
-
-  UPROPERTY(EditAnywhere)
-  class UMaterialInterface *Material = nullptr;
 
   UPROPERTY(EditAnywhere)
   float Scale = 0.8f;

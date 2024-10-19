@@ -24,6 +24,14 @@
 		"directory": "/opt/unreal-engine/Engine/Source"
 	},
 	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Geometry/BaseGeometry.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
 		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanGameMode.cpp",
 		"arguments": [
 			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
@@ -65,6 +73,14 @@
 	},
 	{
 		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Pickup/ScorePickupActor.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/Geometry/BaseGeometry.h",
 		"arguments": [
 			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
 			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
