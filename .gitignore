@@ -1,5 +1,6 @@
 # Visual Studio 2015 user specific files
 .vs/
+.cache/*
 
 # Compiled Object files
 *.slo
