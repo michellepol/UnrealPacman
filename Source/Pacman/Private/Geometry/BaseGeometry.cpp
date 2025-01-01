@@ -11,7 +11,6 @@
 #include "Templates/Casts.h"
 
 void ABaseGeometry::SpawnPickup() {
-
   if (!ScorePickupBP || !PowerUpPickupBP) {
     UE_LOG(LogTemp, Error,
            TEXT("ScorePickupBP or PowerUpPickupBP is not defined"));
@@ -47,10 +46,7 @@ ABaseGeometry::ABaseGeometry() {
   SetRootComponent(StaticMeshComponent);
 }
 
-// Called when the game starts or when spawned
-void ABaseGeometry::BeginPlay() {
-  Super::BeginPlay();
-
+void ABaseGeometry::SetStaticMeshByGeometryType() {
   switch (GeometryType) {
   case EGeometryType::Wall:
     StaticMeshComponent->SetStaticMesh(WallMesh);
@@ -59,11 +55,23 @@ void ABaseGeometry::BeginPlay() {
     StaticMeshComponent->SetStaticMesh(FloorMesh);
     break;
   }
+}
+
+void ABaseGeometry::BeginPlay() {
+  Super::BeginPlay();
+
+  SetStaticMeshByGeometryType();
 
   if (GeometryType == EGeometryType::Floor) {
     SpawnPickup();
   }
 }
 
-// Called every frame
+void ABaseGeometry::OnConstruction(const FTransform &Transform) {
+  SetStaticMeshByGeometryType();
+
+  if (GeometryType == EGeometryType::Floor && GetWorld()->IsEditorWorld()) {
+  }
+}
+
 void ABaseGeometry::Tick(float DeltaTime) { Super::Tick(DeltaTime); }

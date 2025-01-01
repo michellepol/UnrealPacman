@@ -9,11 +9,11 @@
 
 #include "BaseGeometry.generated.h"
 
-UENUM()
-enum class EGeometryType { Wall = 0, Floor = 1 };
+UENUM(BlueprintType)
+enum class EGeometryType : uint8 { Wall = 0, Floor = 1 };
 
-UENUM()
-enum class EPickupType { Score = 0, PowerUp = 1 };
+UENUM(BlueprintType)
+enum class EPickupType : uint8 { Score = 0, PowerUp = 1 };
 
 UCLASS()
 class PACMAN_API ABaseGeometry : public AActor {
@@ -24,7 +24,10 @@ public:
   ABaseGeometry();
 
 protected:
+  // Called when the game starts or when spawned
   virtual void BeginPlay() override;
+
+  virtual void OnConstruction(const FTransform &Transform) override;
 
 public:
   // Called every frame
@@ -33,27 +36,28 @@ public:
   void SpawnPickup();
 
   // Components
-
-  UPROPERTY(EditAnywhere)
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
   class UStaticMeshComponent *StaticMeshComponent = nullptr;
 
   // Properties
-
-  UPROPERTY(EditAnywhere)
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
   class UStaticMesh *FloorMesh = nullptr;
 
-  UPROPERTY(EditAnywhere)
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
   class UStaticMesh *WallMesh = nullptr;
 
-  UPROPERTY(EditAnywhere)
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
   class UBlueprint *PowerUpPickupBP = nullptr;
 
-  UPROPERTY(EditAnywhere)
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
   class UBlueprint *ScorePickupBP = nullptr;
 
-  UPROPERTY(EditAnywhere)
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
   EGeometryType GeometryType;
 
-  UPROPERTY(EditAnywhere)
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
   EPickupType PickupType;
+
+private:
+  void SetStaticMeshByGeometryType();
 };
