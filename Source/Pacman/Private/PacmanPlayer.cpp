@@ -3,9 +3,7 @@
 #include "PacmanPlayer.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "GameFramework/CharacterMovementComponent.h"
 #include "InputAction.h"
-#include "InputMappingContext.h"
 #include "InputTriggers.h"
 
 // Sets default values
