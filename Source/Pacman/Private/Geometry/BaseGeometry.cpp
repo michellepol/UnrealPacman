@@ -51,9 +51,8 @@ void ABaseGeometry::SetStaticMeshByGeometryType() {
   case EGeometryType::Wall:
     StaticMeshComponent->SetStaticMesh(WallMesh);
     break;
-  case EGeometryType::Floor:
-    StaticMeshComponent->SetStaticMesh(FloorMesh);
-    break;
+  default:
+    return;
   }
 }
 
@@ -69,9 +68,6 @@ void ABaseGeometry::BeginPlay() {
 
 void ABaseGeometry::OnConstruction(const FTransform &Transform) {
   SetStaticMeshByGeometryType();
-
-  if (GeometryType == EGeometryType::Floor && GetWorld()->IsEditorWorld()) {
-  }
 }
 
 void ABaseGeometry::Tick(float DeltaTime) { Super::Tick(DeltaTime); }

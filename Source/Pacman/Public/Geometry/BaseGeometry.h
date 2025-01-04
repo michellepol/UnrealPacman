@@ -10,10 +10,10 @@
 #include "BaseGeometry.generated.h"
 
 UENUM(BlueprintType)
-enum class EGeometryType : uint8 { Wall = 0, Floor = 1 };
+enum class EGeometryType : uint8 { Wall = 0, Floor = 1, None = 2 };
 
 UENUM(BlueprintType)
-enum class EPickupType : uint8 { Score = 0, PowerUp = 1 };
+enum class EPickupType : uint8 { Score = 0, PowerUp = 1, None = 2 };
 
 UCLASS()
 class PACMAN_API ABaseGeometry : public AActor {
@@ -38,10 +38,6 @@ public:
   // Components
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
   class UStaticMeshComponent *StaticMeshComponent = nullptr;
-
-  // Properties
-  UPROPERTY(BlueprintReadWrite, EditAnywhere)
-  class UStaticMesh *FloorMesh = nullptr;
 
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
   class UStaticMesh *WallMesh = nullptr;

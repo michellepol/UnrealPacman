@@ -1,0 +1,186 @@
+[
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Pacman.Build.cs",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Pacman.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Pacman.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/Ghost.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/GhostController.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Geometry/BaseGeometry.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanGameMode.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanHUD.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanPlayer.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanPlayerController.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Pickup/BasePickupActor.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Pickup/PowerUpPickupActor.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Pickup/ScorePickupActor.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/AI/Ghost.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/AI/GhostController.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/Geometry/BaseGeometry.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/PacmanGameMode.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/PacmanHUD.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/PacmanPlayer.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/PacmanPlayerController.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/Pickup/BasePickupActor.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/Pickup/PowerUpPickupActor.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/Pickup/ScorePickupActor.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Pacman/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	}
+]
