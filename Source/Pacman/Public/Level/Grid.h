@@ -6,8 +6,6 @@
 
 #include "Grid.generated.h"
 
-class ANavMeshBoundsVolume;
-
 DECLARE_LOG_CATEGORY_EXTERN(LogGrid, Log, All);
 
 UCLASS()

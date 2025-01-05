@@ -7,10 +7,7 @@
 #include "Engine/EngineTypes.h"
 #include "Engine/StaticMesh.h"
 
-// Sets default values
 ABasePickupActor::ABasePickupActor() {
-  // Set this actor to call Tick() every frame.  You can turn this off to
-  // improve performance if you don't need it.
   PrimaryActorTick.bCanEverTick = true;
 
   CollisionComponent =
@@ -33,9 +30,9 @@ ABasePickupActor::ABasePickupActor() {
       CreateDefaultSubobject<UStaticMeshComponent>("MeshComponent");
   StaticMeshComponent->SetWorldScale3D(FVector(Scale));
   StaticMeshComponent->SetupAttachment(CollisionComponent);
+  StaticMeshComponent->SetCollisionProfileName(FName("OverlapAllDynamic"));
 }
 
-// Called when the game starts or when spawned
 void ABasePickupActor::BeginPlay() {
   Super::BeginPlay();
 
@@ -43,7 +40,6 @@ void ABasePickupActor::BeginPlay() {
   check(StaticMeshComponent);
 }
 
-// Called every frame
 void ABasePickupActor::Tick(float DeltaTime) { Super::Tick(DeltaTime); }
 
 void ABasePickupActor::OnBeginOverlap(UPrimitiveComponent *OverlappedComponent,
@@ -57,5 +53,5 @@ void ABasePickupActor::OnBeginOverlap(UPrimitiveComponent *OverlappedComponent,
 }
 
 void ABasePickupActor::ApplyAction(AActor *OtherActor) {
-  UE_LOG(LogTemp, Warning, TEXT("Base ApplyAction"));
+  UE_LOG(LogTemp, Display, TEXT("Base pickup applied action"));
 }

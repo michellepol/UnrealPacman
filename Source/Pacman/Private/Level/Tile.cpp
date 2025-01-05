@@ -2,12 +2,16 @@
 
 #include "Level/Tile.h"
 
-#include "Components/StaticMeshComponent.h"
 #include "Engine/Blueprint.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
+
+#include "Components/StaticMeshComponent.h"
+
 #include "Math/MathFwd.h"
 #include "Templates/Casts.h"
+
+DEFINE_LOG_CATEGORY(LogTile);
 
 ATile::ATile() {
   PrimaryActorTick.bCanEverTick = false;
@@ -19,8 +23,6 @@ ATile::ATile() {
 
 void ATile::BeginPlay() {
   Super::BeginPlay();
-
-  SetStaticMeshByTileType();
 
   if (TileType == ETileType::Floor && PickupType != EPickupType::None) {
     SpawnPickup();
@@ -50,7 +52,7 @@ void ATile::SetStaticMeshByTileType() {
 
 void ATile::SpawnPickup() {
   if (!ScorePickupBP || !PowerUpPickupBP) {
-    UE_LOG(LogTemp, Error,
+    UE_LOG(LogTile, Error,
            TEXT("ScorePickupBP or PowerUpPickupBP is not defined"));
     return;
   }

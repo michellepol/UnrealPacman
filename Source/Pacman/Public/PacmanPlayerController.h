@@ -6,9 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "PacmanPlayerController.generated.h"
 
-/**
- *
- */
 UCLASS()
 class PACMAN_API APacmanPlayerController : public APlayerController {
   GENERATED_BODY()

@@ -64,11 +64,9 @@ void APacmanPlayer::MoveY(const FInputActionInstance &Instance) {
   WorldDirection = GetActorForwardVector();
 }
 
-// Called every frame
 void APacmanPlayer::Tick(float DeltaTime) {
   Super::Tick(DeltaTime);
 
-  // To do if direction is clear
   if (CheckIntention()) {
     AddMovementInput(WorldDirection, Sign * Speed);
   }

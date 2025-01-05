@@ -9,6 +9,8 @@
 
 #include "Tile.generated.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(LogTile, Log, All);
+
 UENUM(BlueprintType) enum class ETileType : uint8 { Wall = 0, Floor = 1 };
 
 UENUM(BlueprintType)

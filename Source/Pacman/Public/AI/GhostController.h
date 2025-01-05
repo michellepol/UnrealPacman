@@ -2,16 +2,11 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "AIController.h"
+#include "CoreMinimal.h"
 #include "GhostController.generated.h"
 
-/**
- * 
- */
 UCLASS()
-class PACMAN_API AGhostController : public AAIController
-{
-	GENERATED_BODY()
-	
+class PACMAN_API AGhostController : public AAIController {
+  GENERATED_BODY()
 };
