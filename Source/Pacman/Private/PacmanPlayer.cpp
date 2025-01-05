@@ -6,11 +6,17 @@
 #include "InputAction.h"
 #include "InputTriggers.h"
 
+#include "Components/CapsuleComponent.h"
+
 // Sets default values
 APacmanPlayer::APacmanPlayer() {
   // Set this character to call Tick() every frame.  You can turn this off to
   // improve performance if you don't need it.
   PrimaryActorTick.bCanEverTick = true;
+
+  UCapsuleComponent *CollisionComponent = GetCapsuleComponent();
+  CollisionComponent->SetGenerateOverlapEvents(true);
+  CollisionComponent->SetCollisionProfileName(FName("OverlapAllDynamic"));
 }
 
 // Called when the game starts or when spawned

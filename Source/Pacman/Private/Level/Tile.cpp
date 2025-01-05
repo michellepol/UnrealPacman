@@ -19,6 +19,11 @@ ATile::ATile() {
   StaticMeshComponent =
       CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComponent"));
   SetRootComponent(StaticMeshComponent);
+
+  StaticMeshComponent->SetCollisionResponseToAllChannels(
+      ECollisionResponse::ECR_Block);
+  StaticMeshComponent->SetCollisionObjectType(
+      ECollisionChannel::ECC_WorldStatic);
 }
 
 void ATile::BeginPlay() {

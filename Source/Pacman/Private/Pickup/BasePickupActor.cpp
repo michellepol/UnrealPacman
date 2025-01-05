@@ -30,7 +30,7 @@ ABasePickupActor::ABasePickupActor() {
       CreateDefaultSubobject<UStaticMeshComponent>("MeshComponent");
   StaticMeshComponent->SetWorldScale3D(FVector(Scale));
   StaticMeshComponent->SetupAttachment(CollisionComponent);
-  StaticMeshComponent->SetCollisionProfileName(FName("OverlapAllDynamic"));
+  StaticMeshComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void ABasePickupActor::BeginPlay() {
