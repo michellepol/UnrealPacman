@@ -23,6 +23,8 @@ class PACMAN_API ATile : public AActor {
 public:
   ATile();
 
+  void SetDebugMaterial();
+
 protected:
   virtual void BeginPlay() override;
 
@@ -34,6 +36,9 @@ public:
   // Components
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
   class UStaticMeshComponent *StaticMeshComponent = nullptr;
+
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
+  class UMaterialInterface *DebugMaterial = nullptr;
 
   // Geometry
   UPROPERTY(BlueprintReadWrite, EditAnywhere)

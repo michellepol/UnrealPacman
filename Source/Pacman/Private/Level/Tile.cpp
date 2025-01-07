@@ -55,6 +55,10 @@ void ATile::SetStaticMeshByTileType() {
   }
 }
 
+void ATile::SetDebugMaterial() {
+  StaticMeshComponent->SetMaterial(0, DebugMaterial);
+}
+
 void ATile::SpawnPickup() {
   if (!ScorePickupBP || !PowerUpPickupBP) {
     UE_LOG(LogTile, Error,

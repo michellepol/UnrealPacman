@@ -43,7 +43,7 @@ public:
 
 private:
   UPROPERTY(EditAnywhere, Category = Input)
-  UInputMappingContext *InputMappingContext;
+  UInputMappingContext *InputMappingContext = nullptr;
 
   UPROPERTY(EditAnywhere, Category = Input)
   float Speed = 200.0f;

@@ -40,6 +40,30 @@
 		"directory": "/opt/unreal-engine/Engine/Source"
 	},
 	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/Tasks/PinkGhost/ChaseTask.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/Tasks/PinkGhost/Frightened.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/Tasks/PinkGhost/Scatter.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
 		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Level/Grid.cpp",
 		"arguments": [
 			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
@@ -57,6 +81,14 @@
 	},
 	{
 		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanGameMode.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanGameState.cpp",
 		"arguments": [
 			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
 			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
@@ -128,6 +160,30 @@
 		"directory": "/opt/unreal-engine/Engine/Source"
 	},
 	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/AI/Tasks/PinkGhost/ChaseTask.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/AI/Tasks/PinkGhost/Frightened.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/AI/Tasks/PinkGhost/Scattered.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
 		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/Level/Grid.h",
 		"arguments": [
 			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
@@ -145,6 +201,14 @@
 	},
 	{
 		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/PacmanGameMode.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/PacmanGameState.h",
 		"arguments": [
 			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
 			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
