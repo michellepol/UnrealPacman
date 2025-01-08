@@ -7,38 +7,42 @@
 
 #include "Level/Tile.h"
 #include "PacmanGameState.h"
+#include "Utils/Math.h"
 
 DEFINE_LOG_CATEGORY(LogTask)
 
-UPinkGhostChase_Task::UPinkGhostChase_Task() {
-  NodeName = "Pink Ghost Chase Task"; // Name of this task for easy debugging
-}
+namespace {
 
+///@brief Find location of tile which is 4 tiles ahead of Pacman current
+/// direction
 FVector CalculateTargetLocation(const FGridPosition PacmanTilePosition,
-                                const FVector &PacmanVelocity,
-                                const AGrid &Grid) {
+                                FVector PacmanVelocity, const AGrid &Grid) {
   constexpr static int kTilesAheadPacman = 4;
+  const static FVector UpDirection = FVector{0.0f, 1.0f, 0.0f};
+  const static FVector DownDirection = FVector{0.0f, -1.0f, 0.0f};
+  const static FVector RightDirection = FVector{-1.0f, 0.0f, 0.0f};
+  const static FVector LeftDirection = FVector{1.0f, 0.0f, 0.0f};
 
   FGridPosition TargetTilePosition = PacmanTilePosition;
 
-  FVector UpDirection = FVector{0.0f, 1.0f, 0.0f};
-  FVector DownDirection = FVector{0.0f, -1.0f, 0.0f};
-  FVector RightDirection = FVector{-1.0f, 0.0f, 0.0f};
+  PacmanVelocity.Normalize();
 
-  if (FVector::DotProduct(PacmanVelocity, UpDirection) > 0.0f) {
+  if (IsSameDirection(UpDirection, PacmanVelocity)) {
     TargetTilePosition.row += kTilesAheadPacman;
-  } else if (FVector::DotProduct(PacmanVelocity, DownDirection) > 0.0f) {
+  } else if (IsSameDirection(DownDirection, PacmanVelocity)) {
     TargetTilePosition.row -= kTilesAheadPacman;
-  } else if (FVector::DotProduct(PacmanVelocity, RightDirection) > 0.0f) {
+  } else if (IsSameDirection(RightDirection, PacmanVelocity)) {
     TargetTilePosition.col -= kTilesAheadPacman;
-  } else {
+  } else if (IsSameDirection(LeftDirection, PacmanVelocity)) {
     TargetTilePosition.col += kTilesAheadPacman;
+  } else {
   }
 
   ATile *Tile = Grid.GetTileByGridPos(TargetTilePosition);
 
   if (!Tile) {
-    UE_LOG(LogTask, Error, TEXT("Not valid Tile"));
+    UE_LOG(LogTask, Error,
+           TEXT("Not valid Tile for Pink Ghost Target Location"));
     return FVector();
   }
 
@@ -47,31 +51,34 @@ FVector CalculateTargetLocation(const FGridPosition PacmanTilePosition,
   return Tile->GetActorLocation();
 }
 
+} // namespace
+
+UPinkGhostChase_Task::UPinkGhostChase_Task() {
+  NodeName = "Pink Ghost Chase Task";
+}
+
 EBTNodeResult::Type
 UPinkGhostChase_Task::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
                                   uint8 *NodeMemory) {
   UWorld *World = OwnerComp.GetWorld();
-
   if (!World) {
     UE_LOG(LogTask, Error, TEXT("World is Null"));
     return EBTNodeResult::Type::Failed;
   }
 
   AGameStateBase *GameState = World->GetGameState();
-
   if (!GameState) {
     UE_LOG(LogTask, Error, TEXT("GameState is Null"));
     return EBTNodeResult::Type::Failed;
   }
-  APacmanGameState *PacmanGameState = Cast<APacmanGameState>(GameState);
 
+  APacmanGameState *PacmanGameState = Cast<APacmanGameState>(GameState);
   if (!PacmanGameState) {
     UE_LOG(LogTask, Error, TEXT("Can't cast BaseGameState to Pacman State"));
     return EBTNodeResult::Type::Failed;
   }
 
   const AGrid *Grid = PacmanGameState->GetGrid();
-
   if (!Grid) {
     UE_LOG(LogTask, Error, TEXT("Grid is Null"));
     return EBTNodeResult::Type::Failed;
@@ -84,19 +91,18 @@ UPinkGhostChase_Task::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
     return EBTNodeResult::Failed;
   }
 
-  // Get the player pawn from the controller
-  APawn *PlayerPawn = PlayerController->GetPawn();
-  if (PlayerPawn == nullptr) {
+  APawn *Pacman = PlayerController->GetPawn();
+  if (Pacman == nullptr) {
     UE_LOG(LogTask, Error, TEXT("Player pawn is Null"));
     return EBTNodeResult::Failed;
   }
 
-  FVector PacmanLocation = PlayerPawn->GetActorLocation();
+  FVector PacmanLocation = Pacman->GetActorLocation();
 
   FGridPosition PacmanGridPosition =
       Grid->GetTileGridPosByLocation(PacmanLocation.X, PacmanLocation.Y);
 
-  FVector Velocity = PlayerPawn->GetVelocity();
+  FVector Velocity = Pacman->GetVelocity();
 
   FVector TargetLocation =
       CalculateTargetLocation(PacmanGridPosition, Velocity, *Grid);

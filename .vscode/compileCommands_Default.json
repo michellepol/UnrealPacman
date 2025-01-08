@@ -144,6 +144,22 @@
 		"directory": "/opt/unreal-engine/Engine/Source"
 	},
 	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Utils/Math.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Utils/MathTest.cpp",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
 		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/AI/Ghost.h",
 		"arguments": [
 			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
@@ -257,6 +273,22 @@
 	},
 	{
 		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/Pickup/ScorePickupActor.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/Utils/Math.h",
+		"arguments": [
+			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"
+		],
+		"directory": "/opt/unreal-engine/Engine/Source"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Public/Utils/MathTest.h",
 		"arguments": [
 			"/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
 			"@/home/michelle/documents/Unreal Projects/Pacman/.vscode/compileCommands_Default/Pacman.1.rsp"

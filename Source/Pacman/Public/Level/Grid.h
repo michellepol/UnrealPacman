@@ -4,36 +4,13 @@
 #include "GameFramework/Actor.h"
 #include "UObject/ObjectMacros.h"
 
+#include "Level/GridPosition.h"
+
 #include "Grid.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogGrid, Log, All);
 
 class ATile;
-
-USTRUCT(BlueprintType)
-struct FGridPosition {
-  GENERATED_BODY()
-
-  UPROPERTY(BlueprintReadWrite)
-  int row = 0;
-
-  UPROPERTY(BlueprintReadWrite)
-  int col = 0;
-};
-
-FORCEINLINE uint32 GetTypeHash(const FGridPosition &Pos) {
-  // Use a combination of the vector components to generate a hash
-
-  uint32_t RowHash =
-      GetTypeHash(FString::Format(TEXT("r{Row}"), {TEXT("Row"), Pos.row}));
-
-  uint32_t ColHash =
-      GetTypeHash(FString::Format(TEXT("r{Col}"), {TEXT("Col"), Pos.col}));
-
-  return HashCombine(RowHash, ColHash);
-}
-
-bool operator==(const FGridPosition lhs, const FGridPosition rhs);
 
 UCLASS()
 class PACMAN_API AGrid : public AActor {

@@ -10,33 +10,45 @@
 
 DEFINE_LOG_CATEGORY(LogGrid);
 
-bool operator==(const FGridPosition lhs, const FGridPosition rhs) {
-  return lhs.row == rhs.row && lhs.col == rhs.col;
+namespace {
+
+bool IsGridActorPlaced(AGrid *Grid, const TArray<AActor *> &Actors) {
+  for (AActor *Actor : Actors) {
+    if (Actor == Grid) {
+      return true;
+    }
+  }
+
+  return false;
 }
+
+void DeleteRelatedActors(TArray<AActor *> Actors) {
+  UE_LOG(LogGrid, Display, TEXT("Delete related actors: %i"), Actors.Num());
+
+  for (AActor *Actor : Actors) {
+    if (Actor) {
+      Actor->Destroy();
+    }
+  }
+}
+
+} // namespace
 
 AGrid::AGrid() {
   FEditorDelegates::OnNewActorsPlaced.AddUObject(this, &AGrid::OnEditorPlaced);
 }
 
 void AGrid::OnEditorPlaced(UObject *Object, const TArray<AActor *> &Actors) {
-  bool GridPlaced = false;
-  for (AActor *Actor : Actors) {
-    if (Actor == this) {
-      GridPlaced = true;
-    }
-  }
-
-  if (GridPlaced == false) {
+  if (!IsGridActorPlaced(this, Actors)) {
     return;
   }
 
-  auto *World = GetWorld();
-
-  if (!World) {
+  if (!GetWorld()) {
     return;
   }
 
   if (!TileBP) {
+    UE_LOG(LogGrid, Error, TEXT("Tile Blueprint is not set for grid"));
     return;
   }
 
@@ -59,22 +71,12 @@ void AGrid::OnEditorPlaced(UObject *Object, const TArray<AActor *> &Actors) {
       FActorSpawnParameters SpawnParams;
       SpawnParams.Owner = this;
 
-      auto *SpawnedTile = World->SpawnActor<AActor>(
+      auto *SpawnedTile = GetWorld()->SpawnActor<AActor>(
           TileBP->GeneratedClass, SpawnTransform, SpawnParams);
 
       const FAttachmentTransformRules AttachmentRules(
           EAttachmentRule::KeepWorld, false);
       SpawnedTile->AttachToActor(this, AttachmentRules);
-    }
-  }
-}
-
-void DeleteRelatedActors(TArray<AActor *> Actors) {
-  UE_LOG(LogGrid, Display, TEXT("Delete related actors: %i"), Actors.Num());
-
-  for (AActor *Actor : Actors) {
-    if (Actor) {
-      Actor->Destroy();
     }
   }
 }
@@ -102,8 +104,8 @@ void AGrid::BeginPlay() {
 
     FVector Location = Actor->GetActorLocation();
 
-    const int row = Location.X / TileSize;
-    const int col = Location.Y / TileSize;
+    const int row = Location.Y / TileSize;
+    const int col = Location.X / TileSize;
 
     if (Actor == nullptr) {
       continue;
@@ -114,8 +116,8 @@ void AGrid::BeginPlay() {
 }
 
 FGridPosition AGrid::GetTileGridPosByLocation(const int x, const int y) const {
-  const int row = x / TileSize;
-  const int col = y / TileSize;
+  const int row = y / TileSize;
+  const int col = x / TileSize;
 
   return FGridPosition(row, col);
 }
