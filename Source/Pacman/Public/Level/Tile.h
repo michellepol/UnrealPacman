@@ -7,6 +7,8 @@
 #include "Templates/Casts.h"
 #include "UObject/ObjectMacros.h"
 
+#include "Level/GridPosition.h"
+
 #include "Tile.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTile, Log, All);
@@ -24,6 +26,10 @@ public:
   ATile();
 
   void SetDebugMaterial();
+
+  void SetGridPosition(const FGridPosition NewGridPosition);
+
+  FGridPosition GetGridPosition() const;
 
 protected:
   virtual void BeginPlay() override;
@@ -70,4 +76,6 @@ private:
   void SetStaticMeshByTileType();
 
   void SpawnPickup();
+
+  FGridPosition GridPosition;
 };

@@ -97,38 +97,35 @@ void AGrid::BeginPlay() {
   GetAttachedActors(AttachedActors);
 
   for (AActor *Actor : AttachedActors) {
-    // FIXME: not optimal
-    if (Cast<ATile>(Actor) == nullptr) {
+    ATile *Tile = Cast<ATile>(Actor);
+    if (Tile == nullptr) {
       continue;
     }
 
     FVector Location = Actor->GetActorLocation();
 
-    const int row = Location.Y / TileSize;
-    const int col = Location.X / TileSize;
+    FGridPosition GridPosition = GetTileGridPosition(Location.X, Location.Y);
 
-    if (Actor == nullptr) {
-      continue;
-    }
+    Tile->SetGridPosition(GridPosition);
 
-    GridTilesIndex.Add(FGridPosition(row, col), Actor);
+    GridTilesIndex.Add(GridPosition, Actor);
   }
 }
 
-FGridPosition AGrid::GetTileGridPosByLocation(const int x, const int y) const {
+FGridPosition AGrid::GetTileGridPosition(const int x, const int y) const {
   const int row = y / TileSize;
   const int col = x / TileSize;
 
   return FGridPosition(row, col);
 }
 
-ATile *AGrid::GetTileByLocation(const int x, const int y) const {
-  FGridPosition GridPosition = GetTileGridPosByLocation(x, y);
+ATile *AGrid::GetTile(const int x, const int y) const {
+  FGridPosition GridPosition = GetTileGridPosition(x, y);
 
-  return GetTileByGridPos(GridPosition);
+  return GetTile(GridPosition);
 }
 
-ATile *AGrid::GetTileByGridPos(const FGridPosition Pos) const {
+ATile *AGrid::GetTile(const FGridPosition Pos) const {
   AActor *const *Value = GridTilesIndex.Find(Pos);
 
   if (Value == nullptr) {
@@ -146,4 +143,14 @@ ATile *AGrid::GetTileByGridPos(const FGridPosition Pos) const {
   }
 
   return Tile;
+}
+
+ATile *AGrid::GetScatterPoint(const EGhostType GhostType) const {
+  for (const FGhostScatterPoint ScatterPoint : GhostScatterPoints) {
+    if (ScatterPoint.GhostType == GhostType) {
+      return ScatterPoint.Tile;
+    }
+  }
+
+  return nullptr;
 }

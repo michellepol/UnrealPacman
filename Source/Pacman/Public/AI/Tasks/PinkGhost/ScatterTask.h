@@ -5,19 +5,19 @@
 #include "BehaviorTree/BTTaskNode.h"
 #include "CoreMinimal.h"
 
-#include "ChaseTask.generated.h"
+#include "ScatterTask.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(LogTask, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogPinkScatterTask, Log, All);
 
-///@brief Pink Ghost chase behavior
+///@brief Pink Ghost scatter behavior
 ///
-///@details Move Pink Ghost to 4 tiles ahead of Pacman
+///@details Move Pink Ghost to left upper corner of map and set patrolling mode
 UCLASS(Blueprintable)
-class PACMAN_API UAITask_PinkChase : public UBTTaskNode {
+class PACMAN_API UAITask_PinkScatter : public UBTTaskNode {
   GENERATED_BODY()
 
 public:
-  UAITask_PinkChase();
+  UAITask_PinkScatter();
 
 protected:
   virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp,

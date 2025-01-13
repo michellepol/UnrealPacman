@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Math/MathFwd.h"
 
+#include "AI/GhostController.h"
 #include "Level/Tile.h"
 #include "PacmanGameState.h"
 #include "Utils/Math.h"
@@ -15,8 +16,8 @@ namespace {
 
 ///@brief Find location of tile which is 4 tiles ahead of Pacman current
 /// direction
-FVector CalculateTargetLocation(const FGridPosition PacmanTilePosition,
-                                FVector PacmanVelocity, const AGrid &Grid) {
+ATile *FindTargetTile(const FGridPosition PacmanTilePosition,
+                      FVector PacmanVelocity, const AGrid &Grid) {
   constexpr static int kTilesAheadPacman = 4;
   const static FVector UpDirection = FVector{0.0f, 1.0f, 0.0f};
   const static FVector DownDirection = FVector{0.0f, -1.0f, 0.0f};
@@ -38,28 +39,41 @@ FVector CalculateTargetLocation(const FGridPosition PacmanTilePosition,
   } else {
   }
 
-  ATile *Tile = Grid.GetTileByGridPos(TargetTilePosition);
-
-  if (!Tile) {
-    UE_LOG(LogTask, Error,
-           TEXT("Not valid Tile for Pink Ghost Target Location"));
-    return FVector();
-  }
+  ATile *Tile = Grid.GetTile(TargetTilePosition);
 
   Tile->SetDebugMaterial();
 
-  return Tile->GetActorLocation();
+  return Tile;
+}
+
+AGhostController *GetGhostController(UBehaviorTreeComponent &OwnerComp) {
+  AAIController *AIController = OwnerComp.GetAIOwner();
+  if (AIController == nullptr) {
+    UE_LOG(LogTask, Error, TEXT("AI Controller is Null"));
+    return nullptr;
+  }
+
+  return Cast<AGhostController>(AIController);
+}
+
+APawn *GetPacmanPawn(UWorld *World) {
+  APlayerController *PlayerController =
+      UGameplayStatics::GetPlayerController(World, 0);
+  if (PlayerController == nullptr) {
+    UE_LOG(LogTask, Error, TEXT("Player controller is Null"));
+    return nullptr;
+  }
+
+  return PlayerController->GetPawn();
 }
 
 } // namespace
 
-UPinkGhostChase_Task::UPinkGhostChase_Task() {
-  NodeName = "Pink Ghost Chase Task";
-}
+UAITask_PinkChase::UAITask_PinkChase() { NodeName = "Pink Ghost Chase Task"; }
 
 EBTNodeResult::Type
-UPinkGhostChase_Task::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
-                                  uint8 *NodeMemory) {
+UAITask_PinkChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
+                               uint8 *NodeMemory) {
   UWorld *World = OwnerComp.GetWorld();
   if (!World) {
     UE_LOG(LogTask, Error, TEXT("World is Null"));
@@ -84,45 +98,33 @@ UPinkGhostChase_Task::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
     return EBTNodeResult::Type::Failed;
   }
 
-  APlayerController *PlayerController =
-      UGameplayStatics::GetPlayerController(World, 0);
-  if (PlayerController == nullptr) {
-    UE_LOG(LogTask, Error, TEXT("Player controller is Null"));
-    return EBTNodeResult::Failed;
-  }
-
-  APawn *Pacman = PlayerController->GetPawn();
+  APawn *Pacman = GetPacmanPawn(World);
   if (Pacman == nullptr) {
     UE_LOG(LogTask, Error, TEXT("Player pawn is Null"));
-    return EBTNodeResult::Failed;
+    return EBTNodeResult::Type::Failed;
   }
 
   FVector PacmanLocation = Pacman->GetActorLocation();
-
   FGridPosition PacmanGridPosition =
-      Grid->GetTileGridPosByLocation(PacmanLocation.X, PacmanLocation.Y);
+      Grid->GetTileGridPosition(PacmanLocation.X, PacmanLocation.Y);
 
-  FVector Velocity = Pacman->GetVelocity();
+  ATile *Tile =
+      FindTargetTile(PacmanGridPosition, Pacman->GetVelocity(), *Grid);
 
-  FVector TargetLocation =
-      CalculateTargetLocation(PacmanGridPosition, Velocity, *Grid);
-
-  AAIController *AIController = OwnerComp.GetAIOwner();
-  if (AIController == nullptr) {
+  AGhostController *GhostController = GetGhostController(OwnerComp);
+  if (GhostController == nullptr) {
     UE_LOG(LogTask, Error, TEXT("AI Controller is Null"));
     return EBTNodeResult::Type::Failed;
   }
 
-  AIController->MoveToLocation(TargetLocation);
+  GhostController->MoveToTile(Tile);
 
-  return EBTNodeResult::Type::Succeeded;
+  return EBTNodeResult::Type::InProgress;
 }
 
 EBTNodeResult::Type
-UPinkGhostChase_Task::AbortTask(UBehaviorTreeComponent &OwnerComp,
-                                uint8 *NodeMemory) {
-
-  // Call the base class's Abort function if you want default behavior
+UAITask_PinkChase::AbortTask(UBehaviorTreeComponent &OwnerComp,
+                             uint8 *NodeMemory) {
   Super::AbortTask(OwnerComp, NodeMemory);
 
   return EBTNodeResult::Type::Aborted;
