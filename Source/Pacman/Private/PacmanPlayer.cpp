@@ -19,9 +19,6 @@ APacmanPlayer::APacmanPlayer() {
   CollisionComponent->SetCollisionProfileName(FName("OverlapAllDynamic"));
 }
 
-// Called when the game starts or when spawned
-void APacmanPlayer::BeginPlay() { Super::BeginPlay(); }
-
 // Called to bind functionality to input
 void APacmanPlayer::SetupPlayerInputComponent(
     UInputComponent *PlayerInputComponent) {

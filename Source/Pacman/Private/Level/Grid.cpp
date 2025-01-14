@@ -119,7 +119,7 @@ FGridPosition AGrid::GetTileGridPosition(const int x, const int y) const {
   return FGridPosition(row, col);
 }
 
-ATile *AGrid::GetTile(const int x, const int y) const {
+ATile *AGrid::GetTileByLocation(const int x, const int y) const {
   FGridPosition GridPosition = GetTileGridPosition(x, y);
 
   return GetTile(GridPosition);

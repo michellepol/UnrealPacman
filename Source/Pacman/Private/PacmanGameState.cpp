@@ -4,9 +4,11 @@
 
 #include "Engine/World.h"
 
+DEFINE_LOG_CATEGORY(LogPacmanGameState);
+
 APacmanGameState::APacmanGameState() {
   if (!GetWorld()) {
-    UE_LOG(LogTemp, Error, TEXT("No world for game state"));
+    UE_LOG(LogPacmanGameState, Error, TEXT("No world for game state"));
     return;
   }
 
@@ -17,7 +19,8 @@ APacmanGameState::APacmanGameState() {
   UGameplayStatics::GetAllActorsOfClass(World, AGrid::StaticClass(),
                                         FoundGrids);
 
-  UE_LOG(LogTemp, Display, TEXT("Found Grids: %i"), FoundGrids.Num());
+  UE_LOG(LogPacmanGameState, Display, TEXT("Found Grids: %i"),
+         FoundGrids.Num());
 
   for (AActor *Actor : FoundGrids) {
     if (Actor) {

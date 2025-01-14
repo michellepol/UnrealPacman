@@ -9,6 +9,8 @@
 
 #include "PacmanGameState.generated.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(LogPacmanGameState, Log, All);
+
 UCLASS()
 class PACMAN_API APacmanGameState : public AGameStateBase {
   GENERATED_BODY()

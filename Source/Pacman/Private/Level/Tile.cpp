@@ -29,6 +29,8 @@ ATile::ATile() {
 void ATile::BeginPlay() {
   Super::BeginPlay();
 
+  check(StaticMeshComponent);
+
   if (TileType == ETileType::Floor && PickupType != EPickupType::None) {
     SpawnPickup();
   }
@@ -43,7 +45,9 @@ void ATile::OnConstruction(const FTransform &Transform) {
 void ATile::Tick(float DeltaTime) { Super::Tick(DeltaTime); }
 
 void ATile::SetDebugMaterial() {
-  StaticMeshComponent->SetMaterial(0, DebugMaterial);
+  if (StaticMeshComponent) {
+    StaticMeshComponent->SetMaterial(0, DebugMaterial);
+  }
 }
 
 void ATile::SetGridPosition(const FGridPosition NewGridPosition) {

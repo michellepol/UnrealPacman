@@ -8,7 +8,7 @@
 #include "AI/GhostController.h"
 #include "Level/Tile.h"
 #include "PacmanGameState.h"
-#include "Utils/Math.h"
+#include "PacmanPlayer.h"
 
 DEFINE_LOG_CATEGORY(LogTask)
 
@@ -16,34 +16,31 @@ namespace {
 
 ///@brief Find location of tile which is 4 tiles ahead of Pacman current
 /// direction
-ATile *FindTargetTile(const FGridPosition PacmanTilePosition,
-                      FVector PacmanVelocity, const AGrid &Grid) {
+ATile *FindTargetTile(const FGridPosition &PacmanTilePosition,
+                      const APacmanPlayer &Pacman, const AGrid &Grid) {
   constexpr static int kTilesAheadPacman = 4;
-  const static FVector UpDirection = FVector{0.0f, 1.0f, 0.0f};
-  const static FVector DownDirection = FVector{0.0f, -1.0f, 0.0f};
-  const static FVector RightDirection = FVector{-1.0f, 0.0f, 0.0f};
-  const static FVector LeftDirection = FVector{1.0f, 0.0f, 0.0f};
 
   FGridPosition TargetTilePosition = PacmanTilePosition;
 
-  PacmanVelocity.Normalize();
-
-  if (IsSameDirection(UpDirection, PacmanVelocity)) {
+  switch (Pacman.GetDirection()) {
+  case EDirection::kUp:
     TargetTilePosition.row += kTilesAheadPacman;
-  } else if (IsSameDirection(DownDirection, PacmanVelocity)) {
+    break;
+  case EDirection::kDown:
     TargetTilePosition.row -= kTilesAheadPacman;
-  } else if (IsSameDirection(RightDirection, PacmanVelocity)) {
-    TargetTilePosition.col -= kTilesAheadPacman;
-  } else if (IsSameDirection(LeftDirection, PacmanVelocity)) {
+    break;
+  case EDirection::kLeft:
     TargetTilePosition.col += kTilesAheadPacman;
-  } else {
+    break;
+  case EDirection::kRight:
+    TargetTilePosition.col -= kTilesAheadPacman;
+    break;
+  default:
+    // do nothing
+    break;
   }
 
-  ATile *Tile = Grid.GetTile(TargetTilePosition);
-
-  Tile->SetDebugMaterial();
-
-  return Tile;
+  return Grid.GetTile(TargetTilePosition);
 }
 
 AGhostController *GetGhostController(UBehaviorTreeComponent &OwnerComp) {
@@ -56,7 +53,7 @@ AGhostController *GetGhostController(UBehaviorTreeComponent &OwnerComp) {
   return Cast<AGhostController>(AIController);
 }
 
-APawn *GetPacmanPawn(UWorld *World) {
+APacmanPlayer *GetPacmanPlayer(UWorld *World) {
   APlayerController *PlayerController =
       UGameplayStatics::GetPlayerController(World, 0);
   if (PlayerController == nullptr) {
@@ -64,7 +61,7 @@ APawn *GetPacmanPawn(UWorld *World) {
     return nullptr;
   }
 
-  return PlayerController->GetPawn();
+  return Cast<APacmanPlayer>(PlayerController->GetPawn());
 }
 
 } // namespace
@@ -98,7 +95,7 @@ UAITask_PinkChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
     return EBTNodeResult::Type::Failed;
   }
 
-  APawn *Pacman = GetPacmanPawn(World);
+  APacmanPlayer *Pacman = GetPacmanPlayer(World);
   if (Pacman == nullptr) {
     UE_LOG(LogTask, Error, TEXT("Player pawn is Null"));
     return EBTNodeResult::Type::Failed;
@@ -108,8 +105,11 @@ UAITask_PinkChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
   FGridPosition PacmanGridPosition =
       Grid->GetTileGridPosition(PacmanLocation.X, PacmanLocation.Y);
 
-  ATile *Tile =
-      FindTargetTile(PacmanGridPosition, Pacman->GetVelocity(), *Grid);
+  ATile *Tile = FindTargetTile(PacmanGridPosition, *Pacman, *Grid);
+
+  if (Tile) {
+    Tile->SetDebugMaterial();
+  }
 
   AGhostController *GhostController = GetGhostController(OwnerComp);
   if (GhostController == nullptr) {
@@ -119,7 +119,7 @@ UAITask_PinkChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
 
   GhostController->MoveToTile(Tile);
 
-  return EBTNodeResult::Type::InProgress;
+  return EBTNodeResult::Type::Succeeded;
 }
 
 EBTNodeResult::Type

@@ -40,7 +40,7 @@ public:
 
   ///@brief Get Tile by location in World
   UFUNCTION(BlueprintCallable)
-  ATile *GetTile(const int x, const int y) const;
+  ATile *GetTileByLocation(const int x, const int y) const;
 
   ///@brief Get Tile by position in Grid
   UFUNCTION(BlueprintCallable)
