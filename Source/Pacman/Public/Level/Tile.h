@@ -7,6 +7,8 @@
 #include "Templates/Casts.h"
 #include "UObject/ObjectMacros.h"
 
+#include "Level/GridPosition.h"
+
 #include "Tile.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTile, Log, All);
@@ -23,6 +25,12 @@ class PACMAN_API ATile : public AActor {
 public:
   ATile();
 
+  void SetDebugMaterial();
+
+  void SetGridPosition(const FGridPosition NewGridPosition);
+
+  FGridPosition GetGridPosition() const;
+
 protected:
   virtual void BeginPlay() override;
 
@@ -34,6 +42,9 @@ public:
   // Components
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
   class UStaticMeshComponent *StaticMeshComponent = nullptr;
+
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
+  class UMaterialInterface *DebugMaterial = nullptr;
 
   // Geometry
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -65,4 +76,6 @@ private:
   void SetStaticMeshByTileType();
 
   void SpawnPickup();
+
+  FGridPosition GridPosition;
 };

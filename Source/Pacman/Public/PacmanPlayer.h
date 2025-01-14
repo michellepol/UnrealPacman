@@ -3,7 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+
+#include "PacmanCharacter.h"
 
 #include "PacmanPlayer.generated.h"
 
@@ -11,7 +12,7 @@ class UInputAction;
 class UInputMappingContext;
 
 UCLASS()
-class PACMAN_API APacmanPlayer : public ACharacter {
+class PACMAN_API APacmanPlayer : public APacmanCharacter {
   GENERATED_BODY()
 
 public:
@@ -31,9 +32,6 @@ public:
   UPROPERTY(EditDefaultsOnly, Category = Input)
   UInputAction *MoveXAction;
 
-protected:
-  virtual void BeginPlay() override;
-
 public:
   virtual void Tick(float DeltaTime) override;
 
@@ -43,7 +41,7 @@ public:
 
 private:
   UPROPERTY(EditAnywhere, Category = Input)
-  UInputMappingContext *InputMappingContext;
+  UInputMappingContext *InputMappingContext = nullptr;
 
   UPROPERTY(EditAnywhere, Category = Input)
   float Speed = 200.0f;

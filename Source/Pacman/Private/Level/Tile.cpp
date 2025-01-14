@@ -29,6 +29,8 @@ ATile::ATile() {
 void ATile::BeginPlay() {
   Super::BeginPlay();
 
+  check(StaticMeshComponent);
+
   if (TileType == ETileType::Floor && PickupType != EPickupType::None) {
     SpawnPickup();
   }
@@ -41,6 +43,18 @@ void ATile::OnConstruction(const FTransform &Transform) {
 }
 
 void ATile::Tick(float DeltaTime) { Super::Tick(DeltaTime); }
+
+void ATile::SetDebugMaterial() {
+  if (StaticMeshComponent) {
+    StaticMeshComponent->SetMaterial(0, DebugMaterial);
+  }
+}
+
+void ATile::SetGridPosition(const FGridPosition NewGridPosition) {
+  GridPosition = NewGridPosition;
+}
+
+FGridPosition ATile::GetGridPosition() const { return GridPosition; }
 
 void ATile::SetStaticMeshByTileType() {
   switch (TileType) {

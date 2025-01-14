@@ -6,7 +6,20 @@
 #include "CoreMinimal.h"
 #include "GhostController.generated.h"
 
+class ATile;
+class AGrid;
+
+DECLARE_LOG_CATEGORY_EXTERN(LogGhostController, Log, All);
+
 UCLASS()
 class PACMAN_API AGhostController : public AAIController {
   GENERATED_BODY()
+
+public:
+  AGhostController() = default;
+
+  bool MoveToTile(ATile *Tile);
+
+private:
+  AGrid *GetGrid();
 };

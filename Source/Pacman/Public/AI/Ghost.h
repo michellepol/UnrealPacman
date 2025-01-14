@@ -3,11 +3,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+
+#include "PacmanCharacter.h"
+
 #include "Ghost.generated.h"
 
+UENUM(BlueprintType)
+enum class EGhostType : uint8 {
+  kPink UMETA(DisplayName = "Pink"),
+  kRed UMETA(DisplayName = "Red"),
+  kBlue UMETA(DisplayName = "Blue"),
+  kYellow UMETA(DisplayName = "Yellow")
+};
+
 UCLASS()
-class PACMAN_API AGhost : public ACharacter {
+class PACMAN_API AGhost : public APacmanCharacter {
   GENERATED_BODY()
 
 public:

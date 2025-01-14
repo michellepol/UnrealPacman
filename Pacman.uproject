@@ -11,8 +11,10 @@
 			"AdditionalDependencies": [
 				"Engine",
 				"AIModule",
-                "UnrealEd",
-                "Navmesh"
+				"UnrealEd",
+				"Navmesh",
+				"AutomationTest",
+                "NavigationSystem"
 			]
 		}
 	],
@@ -23,6 +25,10 @@
 			"TargetAllowList": [
 				"Editor"
 			]
+		},
+		{
+			"Name": "EditorTests",
+			"Enabled": true
 		}
 	]
 }

@@ -6,65 +6,20 @@
 #include "NavMesh/NavMeshBoundsVolume.h"
 #include "UObject/ObjectMacros.h"
 
+#include "Level/Tile.h"
+
 DEFINE_LOG_CATEGORY(LogGrid);
 
-AGrid::AGrid() {
-  FEditorDelegates::OnNewActorsPlaced.AddUObject(this, &AGrid::OnEditorPlaced);
-}
+namespace {
 
-void AGrid::OnEditorPlaced(UObject *Object, const TArray<AActor *> &Actors) {
-  bool GridPlaced = false;
+bool IsGridActorPlaced(AGrid *Grid, const TArray<AActor *> &Actors) {
   for (AActor *Actor : Actors) {
-    if (Actor == this) {
-      GridPlaced = true;
+    if (Actor == Grid) {
+      return true;
     }
   }
 
-  if (GridPlaced == false) {
-    return;
-  }
-
-  auto *World = GetWorld();
-
-  if (!World) {
-    return;
-  }
-
-  if (!TileBP) {
-    return;
-  }
-
-  UE_LOG(LogGrid, Display, TEXT("IsEditorPlaced called"));
-
-  TArray<AActor *> AttachedActors;
-  GetAttachedActors(AttachedActors);
-  if (!AttachedActors.IsEmpty()) {
-    UE_LOG(LogGrid, Display, TEXT("Attached Actors is not empty: %i"),
-           AttachedActors.Num());
-    return;
-  }
-
-  for (size_t i = 0; i < Width; i++) {
-    for (size_t j = 0; j < Length; j++) {
-      size_t y = i * TileSize;
-      size_t x = j * TileSize;
-
-      FTransform SpawnTransform;
-      SpawnTransform.SetLocation(FVector{x, y, 0});
-
-      FActorSpawnParameters SpawnParams;
-      SpawnParams.Owner = this;
-
-      auto *SpawnedTile = World->SpawnActor<AActor>(
-          TileBP->GeneratedClass, SpawnTransform, SpawnParams);
-
-      const FAttachmentTransformRules AttachmentRules(
-          EAttachmentRule::KeepWorld, false);
-      SpawnedTile->AttachToActor(this, AttachmentRules);
-
-      Tiles.Add(SpawnedTile);
-    }
-  }
+  return false;
 }
 
 void DeleteRelatedActors(TArray<AActor *> Actors) {
@@ -77,6 +32,55 @@ void DeleteRelatedActors(TArray<AActor *> Actors) {
   }
 }
 
+} // namespace
+
+AGrid::AGrid() {
+  FEditorDelegates::OnNewActorsPlaced.AddUObject(this, &AGrid::OnEditorPlaced);
+}
+
+void AGrid::OnEditorPlaced(UObject *Object, const TArray<AActor *> &Actors) {
+  if (!IsGridActorPlaced(this, Actors)) {
+    return;
+  }
+
+  if (!GetWorld()) {
+    return;
+  }
+
+  if (!TileBP) {
+    UE_LOG(LogGrid, Error, TEXT("Tile Blueprint is not set for grid"));
+    return;
+  }
+
+  TArray<AActor *> AttachedActors;
+  GetAttachedActors(AttachedActors);
+  if (!AttachedActors.IsEmpty()) {
+    UE_LOG(LogGrid, Display, TEXT("Attached Actors is not empty: %i"),
+           AttachedActors.Num());
+    return;
+  }
+
+  for (size_t row = 0; row < Width; row++) {
+    for (size_t col = 0; col < Length; col++) {
+      size_t y = row * TileSize;
+      size_t x = col * TileSize;
+
+      FTransform SpawnTransform;
+      SpawnTransform.SetLocation(FVector{x, y, 0});
+
+      FActorSpawnParameters SpawnParams;
+      SpawnParams.Owner = this;
+
+      auto *SpawnedTile = GetWorld()->SpawnActor<AActor>(
+          TileBP->GeneratedClass, SpawnTransform, SpawnParams);
+
+      const FAttachmentTransformRules AttachmentRules(
+          EAttachmentRule::KeepWorld, false);
+      SpawnedTile->AttachToActor(this, AttachmentRules);
+    }
+  }
+}
+
 void AGrid::Destroyed() {
   Super::Destroyed();
 
@@ -84,5 +88,69 @@ void AGrid::Destroyed() {
   GetAttachedActors(AttachedActors);
 
   DeleteRelatedActors(AttachedActors);
-  DeleteRelatedActors(Tiles);
+}
+
+void AGrid::BeginPlay() {
+  Super::BeginPlay();
+
+  TArray<AActor *> AttachedActors;
+  GetAttachedActors(AttachedActors);
+
+  for (AActor *Actor : AttachedActors) {
+    ATile *Tile = Cast<ATile>(Actor);
+    if (Tile == nullptr) {
+      continue;
+    }
+
+    FVector Location = Actor->GetActorLocation();
+
+    FGridPosition GridPosition = GetTileGridPosition(Location.X, Location.Y);
+
+    Tile->SetGridPosition(GridPosition);
+
+    GridTilesIndex.Add(GridPosition, Actor);
+  }
+}
+
+FGridPosition AGrid::GetTileGridPosition(const int x, const int y) const {
+  const int row = y / TileSize;
+  const int col = x / TileSize;
+
+  return FGridPosition(row, col);
+}
+
+ATile *AGrid::GetTileByLocation(const int x, const int y) const {
+  FGridPosition GridPosition = GetTileGridPosition(x, y);
+
+  return GetTile(GridPosition);
+}
+
+ATile *AGrid::GetTile(const FGridPosition Pos) const {
+  AActor *const *Value = GridTilesIndex.Find(Pos);
+
+  if (Value == nullptr) {
+    UE_LOG(LogGrid, Error, TEXT("Not found value by row %i, col %i"), Pos.row,
+           Pos.col);
+    return nullptr;
+  }
+
+  ATile *Tile = Cast<ATile>(*Value);
+
+  if (Tile == nullptr) {
+    UE_LOG(LogGrid, Error, TEXT("Can't cast actor to tile at row %i, col %i"),
+           Pos.row, Pos.col);
+    return nullptr;
+  }
+
+  return Tile;
+}
+
+ATile *AGrid::GetScatterPoint(const EGhostType GhostType) const {
+  for (const FGhostScatterPoint ScatterPoint : GhostScatterPoints) {
+    if (ScatterPoint.GhostType == GhostType) {
+      return ScatterPoint.Tile;
+    }
+  }
+
+  return nullptr;
 }
