@@ -4,6 +4,7 @@
 
 #include "AIController.h"
 #include "Engine/World.h"
+#include "NavigationData.h"
 #include "NavigationSystem.h"
 
 #include "AI/Ghost.h"
@@ -15,6 +16,7 @@ DEFINE_LOG_CATEGORY(LogGhostController);
 
 namespace {
 
+/*
 //@brief Check if tile is behind Ghost
 bool IsTileBehind(const AGhost &Ghost, const ATile &TargetTile,
                   const ATile &GhostTile) {
@@ -38,6 +40,7 @@ bool IsTileBehind(const AGhost &Ghost, const ATile &TargetTile,
     return false;
   }
 }
+*/
 
 } // namespace
 
@@ -84,11 +87,19 @@ bool AGhostController::MoveToTile(ATile *Tile) {
     return false;
   }
 
+  /*
   if (IsTileBehind(*Ghost, *Tile, *GhostTile)) {
     return false;
   }
+  */
 
-  auto Result = MoveToLocation(Tile->GetActorLocation());
+  auto Result = MoveToLocation(Tile->GetActorLocation(),
+                               -1,    // AcceptanceRadius
+                               true,  // bStopOnOverlap
+                               true,  // bUsePathfinding
+                               false, // bProjectDestinationToNavigation
+                               true   // bCanStrafe
+  );
 
   return true;
 }

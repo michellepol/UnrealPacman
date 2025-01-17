@@ -3,6 +3,7 @@
 #include "AIController.h"
 #include "Engine/World.h"
 
+#include "AI/GhostController.h"
 #include "Level/Tile.h"
 #include "PacmanGameState.h"
 #include "Utils/Math.h"
@@ -51,13 +52,14 @@ UAITask_PinkScatter::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
     return EBTNodeResult::Type::Failed;
   }
 
-  AAIController *AIController = OwnerComp.GetAIOwner();
-  if (AIController == nullptr) {
+  AGhostController *GhostController =
+      Cast<AGhostController>(OwnerComp.GetAIOwner());
+  if (GhostController == nullptr) {
     UE_LOG(LogPinkScatterTask, Error, TEXT("AI Controller is Null"));
     return EBTNodeResult::Type::Failed;
   }
 
-  AIController->MoveToLocation(Tile->GetActorLocation());
+  GhostController->MoveToTile(Tile);
 
   return EBTNodeResult::Type::InProgress;
 }

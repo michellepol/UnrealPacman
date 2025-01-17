@@ -3,7 +3,8 @@
 #include "Editor.h"
 #include "Engine/Blueprint.h"
 #include "Engine/World.h"
-#include "NavMesh/NavMeshBoundsVolume.h"
+#include "NavigationData.h"
+#include "NavigationSystem.h"
 #include "UObject/ObjectMacros.h"
 
 #include "Level/Tile.h"

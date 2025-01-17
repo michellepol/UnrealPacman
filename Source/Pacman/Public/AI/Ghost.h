@@ -3,10 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "UObject/ObjectMacros.h"
 
 #include "PacmanCharacter.h"
 
 #include "Ghost.generated.h"
+
+class ANavModifierVolume;
+class UNavArea;
 
 UENUM(BlueprintType)
 enum class EGhostType : uint8 {
@@ -28,4 +32,13 @@ protected:
 
 public:
   virtual void Tick(float DeltaTime) override;
+
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
+  TSubclassOf<ANavModifierVolume> NavModifierVolumeClass;
+
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
+  TSubclassOf<UNavArea> NavAreaClass;
+
+private:
+  ANavModifierVolume *NavModifierVolume = nullptr;
 };
