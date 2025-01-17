@@ -5,19 +5,17 @@
 #include "BehaviorTree/BTTaskNode.h"
 #include "CoreMinimal.h"
 
-#include "ChaseTask.generated.h"
+#include "RedChaseTask.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(LogTask, Log, All);
-
-///@brief Pink Ghost chase behavior
+///@brief Reg Ghost chase behavior
 ///
-///@details Move Pink Ghost to 4 tiles ahead of Pacman
+///@details Move Red Ghost to tile of Pacman
 UCLASS(Blueprintable)
-class PACMAN_API UAITask_PinkChase : public UBTTaskNode {
+class PACMAN_API UAITask_RedChase : public UBTTaskNode {
   GENERATED_BODY()
 
 public:
-  UAITask_PinkChase();
+  UAITask_RedChase();
 
 protected:
   virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp,
