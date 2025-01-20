@@ -17,7 +17,13 @@ UAITask_RedChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
                               uint8 *NodeMemory) {
   UWorld *World = OwnerComp.GetWorld();
 
-  const AGrid *Grid = GetGrid(World);
+  APacmanGameState *PacmanGameState = GetPacmanGameState(World);
+  if (!PacmanGameState) {
+    UE_LOG(LogTask, Error, TEXT("PacmanGameState is Null"));
+    return EBTNodeResult::Type::Failed;
+  }
+
+  const AGrid *Grid = PacmanGameState->GetGrid();
   if (!Grid) {
     UE_LOG(LogTask, Error, TEXT("Grid is Null"));
     return EBTNodeResult::Type::Failed;

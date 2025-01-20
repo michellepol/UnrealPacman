@@ -20,6 +20,12 @@ public:
 
   AGrid *GetGrid();
 
+  AGhost *GetGhost(EGhostType GhostType);
+
+public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite);
   AGrid *Grid = nullptr;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite);
+  TMap<EGhostType, AGhost *> Ghosts;
 };

@@ -1,4 +1,4 @@
-#include "AI/Tasks/PinkGhost/PinkChaseTask.h"
+#include "AI/Tasks/BlueGhost/BlueChaseTask.h"
 
 #include "AIController.h"
 #include "Engine/World.h"
@@ -11,10 +11,10 @@
 #include "PacmanGameState.h"
 #include "PacmanPlayer.h"
 
-UAITask_PinkChase::UAITask_PinkChase() { NodeName = "Pink Ghost Chase Task"; }
+UAITask_BlueChase::UAITask_BlueChase() { NodeName = "Blue Ghost Chase Task"; }
 
 EBTNodeResult::Type
-UAITask_PinkChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
+UAITask_BlueChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
                                uint8 *NodeMemory) {
   UWorld *World = OwnerComp.GetWorld();
 
@@ -36,30 +36,53 @@ UAITask_PinkChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
     return EBTNodeResult::Type::Failed;
   }
 
-  FVector PacmanLocation = Pacman->GetActorLocation();
-  FGridPosition PacmanGridPosition =
-      Grid->GetTileGridPosition(PacmanLocation.X, PacmanLocation.Y);
-
-  ATile *Tile =
-      GetPacmanFrontTile(PacmanGridPosition, *Pacman, *Grid, kTilesAheadPacman);
-
-  if (Tile) {
-    Tile->SetDebugMaterial();
-  }
-
   AGhostController *GhostController = GetGhostController(OwnerComp);
   if (GhostController == nullptr) {
     UE_LOG(LogTask, Error, TEXT("AI Controller is Null"));
     return EBTNodeResult::Type::Failed;
   }
 
-  GhostController->MoveToTile(Tile);
+  FVector PacmanLocation = Pacman->GetActorLocation();
+
+  FGridPosition PacmanGridPosition =
+      Grid->GetTileGridPosition(PacmanLocation.X, PacmanLocation.Y);
+
+  ATile *Tile =
+      GetPacmanFrontTile(PacmanGridPosition, *Pacman, *Grid, kTilesAheadPacman);
+  if (!Tile) {
+    UE_LOG(LogTask, Error, TEXT("Pacman Tile is Null"));
+    return EBTNodeResult::Type::Failed;
+  }
+
+  FVector PacmanTileLocation = Tile->GetActorLocation();
+
+  AGhost *RedGhost = PacmanGameState->GetGhost(EGhostType::kRed);
+  if (!RedGhost) {
+    UE_LOG(LogTask, Error, TEXT("RedGhost is Null"));
+    return EBTNodeResult::Type::Failed;
+  }
+
+  FVector RedGhostLocation = RedGhost->GetActorLocation();
+
+  FVector TargetVector(PacmanTileLocation.X - RedGhostLocation.X,
+                       PacmanTileLocation.Y - RedGhostLocation.Y,
+                       PacmanTileLocation.Z);
+
+  // Multiply because target tile of ghost is end of TargetVector multiplied by
+  // 2
+  TargetVector.X *= 2;
+  TargetVector.Y *= 2;
+
+  FVector TargetLocation = RedGhostLocation + TargetVector;
+
+  GhostController->MoveToTile(
+      Grid->GetTileByLocation(TargetLocation.X, TargetLocation.Y));
 
   return EBTNodeResult::Type::Succeeded;
 }
 
 EBTNodeResult::Type
-UAITask_PinkChase::AbortTask(UBehaviorTreeComponent &OwnerComp,
+UAITask_BlueChase::AbortTask(UBehaviorTreeComponent &OwnerComp,
                              uint8 *NodeMemory) {
   Super::AbortTask(OwnerComp, NodeMemory);
 

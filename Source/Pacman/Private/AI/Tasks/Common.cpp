@@ -34,7 +34,7 @@ APacmanPlayer *GetPacmanPlayer(UWorld *World) {
   return Cast<APacmanPlayer>(PlayerController->GetPawn());
 }
 
-AGrid *GetGrid(UWorld *World) {
+APacmanGameState *GetPacmanGameState(UWorld *World) {
   if (!World) {
     UE_LOG(LogTask, Error, TEXT("World is Null"));
     return nullptr;
@@ -52,5 +52,31 @@ AGrid *GetGrid(UWorld *World) {
     return nullptr;
   }
 
-  return PacmanGameState->GetGrid();
+  return PacmanGameState;
+}
+
+ATile *GetPacmanFrontTile(const FGridPosition &PacmanTilePosition,
+                          const APacmanPlayer &Pacman, const AGrid &Grid,
+                          const uint Offset) {
+  FGridPosition TargetTilePosition = PacmanTilePosition;
+
+  switch (Pacman.GetDirection()) {
+  case EDirection::kUp:
+    TargetTilePosition.row += Offset;
+    break;
+  case EDirection::kDown:
+    TargetTilePosition.row -= Offset;
+    break;
+  case EDirection::kLeft:
+    TargetTilePosition.col += Offset;
+    break;
+  case EDirection::kRight:
+    TargetTilePosition.col -= Offset;
+    break;
+  default:
+    // do nothing
+    break;
+  }
+
+  return Grid.GetTile(TargetTilePosition);
 }
