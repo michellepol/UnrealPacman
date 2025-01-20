@@ -41,3 +41,5 @@ void AGhost::Tick(float DeltaTime) {
     NavModifierVolume->SetActorLocation(Location);
   }
 }
+
+EGhostType AGhost::GetGhostType() { return GhostType; }

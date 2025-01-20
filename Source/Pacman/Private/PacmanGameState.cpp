@@ -28,6 +28,28 @@ APacmanGameState::APacmanGameState() {
       break;
     }
   }
+
+  TArray<AActor *> FoundGhosts;
+  UGameplayStatics::GetAllActorsOfClass(World, AGhost::StaticClass(),
+                                        FoundGhosts);
+
+  for (AActor *PotentialGhost : FoundGhosts) {
+    AGhost *Ghost = Cast<AGhost>(PotentialGhost);
+    if (!Ghost) {
+      continue;
+    }
+    Ghosts.Add(Ghost->GetGhostType(), Ghost);
+  }
 }
 
 AGrid *APacmanGameState::GetGrid() { return Grid; }
+
+AGhost *APacmanGameState::GetGhost(EGhostType GhostType) {
+  AGhost **Value = Ghosts.Find(GhostType);
+
+  if (!Value) {
+    return nullptr;
+  }
+
+  return *Value;
+}

@@ -27,6 +27,8 @@ class PACMAN_API AGhost : public APacmanCharacter {
 public:
   AGhost();
 
+  EGhostType GetGhostType();
+
 protected:
   virtual void BeginPlay() override;
 
@@ -38,6 +40,9 @@ public:
 
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
   TSubclassOf<UNavArea> NavAreaClass;
+
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
+  EGhostType GhostType;
 
 private:
   ANavModifierVolume *NavModifierVolume = nullptr;

@@ -5,19 +5,22 @@
 #include "BehaviorTree/BTTaskNode.h"
 #include "CoreMinimal.h"
 
-#include "PinkChaseTask.generated.h"
+#include "BlueChaseTask.generated.h"
 
-///@brief Pink Ghost chase behavior
+///@brief Blue Ghost chase behavior
 ///
-///@details Move Pink Ghost to 4 tiles ahead of Pacman
+///@details Algorithm of task:
+/// 1) Calculate position of 2 tiles ahead of pacman
+/// 2) Get doubled vector from Red Ghost to 2 tiles ahead of pacman
+/// 3) End of doubled vector - target tile for Blue ghost
 UCLASS(Blueprintable)
-class PACMAN_API UAITask_PinkChase : public UBTTaskNode {
+class PACMAN_API UAITask_BlueChase : public UBTTaskNode {
   GENERATED_BODY()
 
 public:
-  UAITask_PinkChase();
+  UAITask_BlueChase();
 
-  const static uint kTilesAheadPacman = 4;
+  const static uint kTilesAheadPacman = 2;
 
 protected:
   virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp,
