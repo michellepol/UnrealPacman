@@ -20,6 +20,12 @@ public:
 
   bool MoveToTile(ATile *Tile);
 
+  void FrigthenedMove();
+
+  void Tick(float DeltaTime) override;
+
+  FVector CurrentDirection;
+
 private:
   AGrid *GetGrid();
 };

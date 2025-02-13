@@ -1,5 +1,7 @@
 #include "Level/Grid.h"
 
+#include <algorithm>
+
 #include "Editor.h"
 #include "Engine/Blueprint.h"
 #include "Engine/World.h"
@@ -109,7 +111,7 @@ void AGrid::BeginPlay() {
 
     Tile->SetGridPosition(GridPosition);
 
-    GridTilesIndex.Add(GridPosition, Actor);
+    GridTilesIndex.Add(GridPosition, Tile);
   }
 }
 
@@ -127,7 +129,7 @@ ATile *AGrid::GetTileByLocation(const int x, const int y) const {
 }
 
 ATile *AGrid::GetTile(const FGridPosition Pos) const {
-  AActor *const *Value = GridTilesIndex.Find(Pos);
+  ATile *const *Value = GridTilesIndex.Find(Pos);
 
   if (Value == nullptr) {
     UE_LOG(LogGrid, Error, TEXT("Not found value by row %i, col %i"), Pos.row,
@@ -135,7 +137,7 @@ ATile *AGrid::GetTile(const FGridPosition Pos) const {
     return nullptr;
   }
 
-  ATile *Tile = Cast<ATile>(*Value);
+  ATile *Tile = *Value;
 
   if (Tile == nullptr) {
     UE_LOG(LogGrid, Error, TEXT("Can't cast actor to tile at row %i, col %i"),
@@ -154,4 +156,68 @@ ATile *AGrid::GetScatterPoint(const EGhostType GhostType) const {
   }
 
   return nullptr;
+}
+
+int AGrid::CalcTileDistance(const FGridPosition FirstCell,
+                            const FGridPosition SecondCell) {
+
+  if (FirstCell.row == SecondCell.row) {
+    return std::abs(FirstCell.col - SecondCell.col);
+  } else if (FirstCell.col == FirstCell.col) {
+    return std::abs(FirstCell.row - SecondCell.row);
+  } else {
+    // Diagonal cells = max(Number of rows, Number of columns).
+    uint rows = std::abs(FirstCell.row - FirstCell.row);
+    uint cols = std::abs(SecondCell.col - SecondCell.col);
+
+    return std::max(rows, cols);
+  }
+}
+
+bool AGrid::IsCrossRoad(const ATile *Tile) {
+  static auto check_adjacent_tile = [this](FGridPosition GridPosition) -> bool {
+    ATile **AdjacentTile = GridTilesIndex.Find(GridPosition);
+
+    return AdjacentTile && (*AdjacentTile)->TileType == ETileType::Floor;
+  };
+
+  FGridPosition GridPosition = Tile->GetGridPosition();
+
+  int TilesIsNotWall = 0;
+
+  // up
+  if (check_adjacent_tile(
+          FGridPosition(GridPosition.row + 1, GridPosition.col))) {
+    TilesIsNotWall += 1;
+  }
+
+  // right
+  if (check_adjacent_tile(
+          FGridPosition(GridPosition.row, GridPosition.col + 1))) {
+    TilesIsNotWall += 1;
+  }
+
+  // left
+  if (check_adjacent_tile(
+          FGridPosition(GridPosition.row, GridPosition.col - 1))) {
+    TilesIsNotWall += 1;
+  }
+
+  // down
+  if (check_adjacent_tile(
+          FGridPosition(GridPosition.row - 1, GridPosition.col))) {
+    TilesIsNotWall += 1;
+  }
+
+  // There is 2 floor tiles
+  // =============
+  //      x
+  // =============
+
+  // There is 3 floor tiles
+  // ===== =======
+  //      x
+  // =============
+
+  return TilesIsNotWall > 2;
 }

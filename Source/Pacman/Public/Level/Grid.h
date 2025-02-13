@@ -48,6 +48,15 @@ public:
 
   ATile *GetScatterPoint(const EGhostType GhostType) const;
 
+  ///@brief Calculate amount of cells between two cells
+  UFUNCTION(BlueprintCallable)
+  int CalcTileDistance(const FGridPosition FirstCell,
+                       const FGridPosition SecondCell);
+
+  ///@brief Check if current tile is crossroad
+  UFUNCTION(BlueprintCallable)
+  bool IsCrossRoad(const ATile *Tile);
+
 public:
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
   int32 Width = 0;
@@ -68,5 +77,5 @@ private:
   UFUNCTION()
   void OnEditorPlaced(UObject *Object, const TArray<AActor *> &Actors);
 
-  TMap<FGridPosition, AActor *> GridTilesIndex;
+  TMap<FGridPosition, ATile *> GridTilesIndex;
 };

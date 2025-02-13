@@ -14,36 +14,6 @@
 
 DEFINE_LOG_CATEGORY(LogGhostController);
 
-namespace {
-
-/*
-//@brief Check if tile is behind Ghost
-bool IsTileBehind(const AGhost &Ghost, const ATile &TargetTile,
-                  const ATile &GhostTile) {
-
-  FGridPosition TargetTilePos = TargetTile.GetGridPosition();
-  FGridPosition GhostTilePos = GhostTile.GetGridPosition();
-
-  switch (Ghost.GetDirection()) {
-  case EDirection::kUp:
-    return TargetTilePos.row < GhostTilePos.row;
-    break;
-  case EDirection::kDown:
-    return TargetTilePos.row > GhostTilePos.row;
-    break;
-  case EDirection::kLeft:
-    return TargetTilePos.col < GhostTilePos.col;
-    break;
-  case EDirection::kRight:
-    return TargetTilePos.col > GhostTilePos.col;
-  default:
-    return false;
-  }
-}
-*/
-
-} // namespace
-
 AGrid *AGhostController::GetGrid() {
   if (GetWorld() == nullptr) {
     return nullptr;
@@ -87,12 +57,6 @@ bool AGhostController::MoveToTile(ATile *Tile) {
     return false;
   }
 
-  /*
-  if (IsTileBehind(*Ghost, *Tile, *GhostTile)) {
-    return false;
-  }
-  */
-
   auto Result = MoveToLocation(Tile->GetActorLocation(),
                                -1,    // AcceptanceRadius
                                true,  // bStopOnOverlap
@@ -102,4 +66,41 @@ bool AGhostController::MoveToTile(ATile *Tile) {
   );
 
   return true;
+}
+
+void AGhostController::FrigthenedMove() {
+  AGrid *Grid = GetGrid();
+
+  if (!Grid) {
+    UE_LOG(LogGhostController, Error, TEXT("No Grid class"));
+    return;
+  }
+
+  FVector GhostLocation = GetPawn()->GetActorLocation();
+
+  ATile *GhostTile = Grid->GetTileByLocation(GhostLocation.X, GhostLocation.Y);
+
+  if (!GhostTile) {
+    UE_LOG(LogGhostController, Error, TEXT("No Ghost Tile "));
+    return;
+  }
+
+  const bool IsCrossRoadTile = Grid->IsCrossRoad(GhostTile);
+
+  if (IsCrossRoadTile) {
+    RotateGhostToNewDirection();
+  } else {
+    MoveForward();
+  }
+}
+
+void AGhostController::Tick(float DeltaTime) {
+  FVector ForwardVector = GetPawn()->GetActorForwardVector();
+}
+
+void AGhostController::MoveInDirection(FVector Direction, float Speed,
+                                       float DeltaTile) {
+  FVector Movement = Direction * Speed * DeltaTime;
+
+  AddActorWorldOffs
 }
