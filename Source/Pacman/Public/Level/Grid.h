@@ -5,6 +5,7 @@
 #include "UObject/ObjectMacros.h"
 
 #include "AI/Ghost.h"
+#include "Level/Direction.h"
 #include "Level/GridPosition.h"
 
 #include "Grid.generated.h"
@@ -12,6 +13,16 @@
 DECLARE_LOG_CATEGORY_EXTERN(LogGrid, Log, All);
 
 class ATile;
+
+USTRUCT(BlueprintType)
+struct FAdjacentTiles {
+  GENERATED_BODY()
+
+  ATile **Up;
+  ATile **Left;
+  ATile **Right;
+  ATile **Down;
+};
 
 USTRUCT(BlueprintType)
 struct FGhostScatterPoint {
@@ -44,7 +55,7 @@ public:
 
   ///@brief Get Tile by position in Grid
   UFUNCTION(BlueprintCallable)
-  ATile *GetTile(const FGridPosition pos) const;
+  ATile *GetTileByGridPos(const FGridPosition pos) const;
 
   ATile *GetScatterPoint(const EGhostType GhostType) const;
 
@@ -55,7 +66,10 @@ public:
 
   ///@brief Check if current tile is crossroad
   UFUNCTION(BlueprintCallable)
-  bool IsCrossRoad(const ATile *Tile);
+  bool IsCrossRoad(const ATile *Tile, const FAdjacentTiles &AdjacentTiles);
+
+  UFUNCTION(BlueprintCallable)
+  FAdjacentTiles GetAdjacentTiles(const ATile *Tile);
 
 public:
   UPROPERTY(BlueprintReadWrite, EditAnywhere)

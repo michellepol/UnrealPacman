@@ -28,4 +28,6 @@ public:
 
 private:
   AGrid *GetGrid();
+
+  void MoveInDirection(FVector Direction, float Speed = 0.1f);
 };
