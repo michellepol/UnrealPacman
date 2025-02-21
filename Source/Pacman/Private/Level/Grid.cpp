@@ -125,10 +125,10 @@ FGridPosition AGrid::GetTileGridPosition(const int x, const int y) const {
 ATile *AGrid::GetTileByLocation(const int x, const int y) const {
   FGridPosition GridPosition = GetTileGridPosition(x, y);
 
-  return GetTile(GridPosition);
+  return GetTileByGridPos(GridPosition);
 }
 
-ATile *AGrid::GetTile(const FGridPosition Pos) const {
+ATile *AGrid::GetTileByGridPos(const FGridPosition Pos) const {
   ATile *const *Value = GridTilesIndex.Find(Pos);
 
   if (Value == nullptr) {
@@ -174,38 +174,30 @@ int AGrid::CalcTileDistance(const FGridPosition FirstCell,
   }
 }
 
-bool AGrid::IsCrossRoad(const ATile *Tile) {
-  static auto check_adjacent_tile = [this](FGridPosition GridPosition) -> bool {
-    ATile **AdjacentTile = GridTilesIndex.Find(GridPosition);
-
-    return AdjacentTile && (*AdjacentTile)->TileType == ETileType::Floor;
-  };
-
-  FGridPosition GridPosition = Tile->GetGridPosition();
-
+bool AGrid::IsCrossRoad(const ATile *Tile,
+                        const FAdjacentTiles &AdjacentTiles) {
   int TilesIsNotWall = 0;
 
   // up
-  if (check_adjacent_tile(
-          FGridPosition(GridPosition.row + 1, GridPosition.col))) {
+  if (AdjacentTiles.Up && (*AdjacentTiles.Up)->TileType == ETileType::Floor) {
     TilesIsNotWall += 1;
   }
 
   // right
-  if (check_adjacent_tile(
-          FGridPosition(GridPosition.row, GridPosition.col + 1))) {
+  if (AdjacentTiles.Right &&
+      (*AdjacentTiles.Right)->TileType == ETileType::Floor) {
     TilesIsNotWall += 1;
   }
 
   // left
-  if (check_adjacent_tile(
-          FGridPosition(GridPosition.row, GridPosition.col - 1))) {
+  if (AdjacentTiles.Left &&
+      (*AdjacentTiles.Left)->TileType == ETileType::Floor) {
     TilesIsNotWall += 1;
   }
 
   // down
-  if (check_adjacent_tile(
-          FGridPosition(GridPosition.row - 1, GridPosition.col))) {
+  if (AdjacentTiles.Down &&
+      (*AdjacentTiles.Down)->TileType == ETileType::Floor) {
     TilesIsNotWall += 1;
   }
 
@@ -218,6 +210,26 @@ bool AGrid::IsCrossRoad(const ATile *Tile) {
   // ===== =======
   //      x
   // =============
-
   return TilesIsNotWall > 2;
+}
+
+UFUNCTION(BlueprintCallable)
+FAdjacentTiles AGrid::GetAdjacentTiles(const ATile *Tile) {
+  FGridPosition GridPosition = Tile->GetGridPosition();
+
+  FGridPosition UpPosition =
+      FGridPosition(GridPosition.row + 1, GridPosition.col);
+  FGridPosition RightPosition =
+      FGridPosition(GridPosition.row, GridPosition.col + 1);
+  FGridPosition LeftPosition =
+      FGridPosition(GridPosition.row, GridPosition.col - 1);
+  FGridPosition DownPosition =
+      FGridPosition(GridPosition.row - 1, GridPosition.col);
+
+  return FAdjacentTiles{
+      .Up = GridTilesIndex.Find(UpPosition),
+      .Left = GridTilesIndex.Find(LeftPosition),
+      .Right = GridTilesIndex.Find(RightPosition),
+      .Down = GridTilesIndex.Find(DownPosition),
+  };
 }

@@ -78,5 +78,5 @@ ATile *GetPacmanFrontTile(const FGridPosition &PacmanTilePosition,
     break;
   }
 
-  return Grid.GetTile(TargetTilePosition);
+  return Grid.GetTileByGridPos(TargetTilePosition);
 }

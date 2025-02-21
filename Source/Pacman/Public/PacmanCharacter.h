@@ -3,16 +3,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 
-#include "PacmanCharacter.generated.h"
+#include "Level/Direction.h"
 
-UENUM(BlueprintType)
-enum class EDirection : uint8 {
-  kUp UMETA(DisplayName = "Up"),
-  kLeft UMETA(DisplayName = "Left"),
-  kRight UMETA(DisplayName = "Right"),
-  kDown UMETA(DisplayName = "Down"),
-  kUndefined UMETA(DisplayName = "Undefined")
-};
+#include "PacmanCharacter.generated.h"
 
 UCLASS()
 class PACMAN_API APacmanCharacter : public ACharacter {

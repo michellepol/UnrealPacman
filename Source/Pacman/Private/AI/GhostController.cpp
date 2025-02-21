@@ -85,22 +85,26 @@ void AGhostController::FrigthenedMove() {
     return;
   }
 
-  const bool IsCrossRoadTile = Grid->IsCrossRoad(GhostTile);
+  FGridPosition GridPosition = GhostTile->GetGridPosition();
+  FAdjacentTiles AdjacentTiles = Grid->GetAdjacentTiles(GhostTile);
+
+  const bool IsCrossRoadTile = Grid->IsCrossRoad(GhostTile, AdjacentTiles);
 
   if (IsCrossRoadTile) {
-    RotateGhostToNewDirection();
+    int min = 0;
+    int max = 3;
+    //...
+    int Direction = (rand() % (max - min)) + min;
+
+    // RotateGhostToNewDirection();
   } else {
-    MoveForward();
+    FVector ForwardVector = GetPawn()->GetActorForwardVector();
+    MoveInDirection(ForwardVector);
   }
 }
 
-void AGhostController::Tick(float DeltaTime) {
-  FVector ForwardVector = GetPawn()->GetActorForwardVector();
-}
+void AGhostController::Tick(float DeltaTime) {}
 
-void AGhostController::MoveInDirection(FVector Direction, float Speed,
-                                       float DeltaTile) {
-  FVector Movement = Direction * Speed * DeltaTime;
-
-  AddActorWorldOffs
+void AGhostController::MoveInDirection(FVector Direction, float Scale) {
+  GetPawn()->AddMovementInput(Direction, Scale);
 }
