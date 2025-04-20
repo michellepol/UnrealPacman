@@ -9,12 +9,15 @@
 
 #include "AI/Ghost.h"
 #include "Level/Grid.h"
+#include "Level/PathFinding.h"
 #include "Level/Tile.h"
 #include "PacmanGameState.h"
 
 DEFINE_LOG_CATEGORY(LogGhostController);
 
-AGrid *AGhostController::GetGrid() {
+AGhostController::AGhostController() {}
+
+AGrid *AGhostController::GetGrid() const {
   if (GetWorld() == nullptr) {
     return nullptr;
   }
@@ -29,8 +32,11 @@ AGrid *AGhostController::GetGrid() {
 }
 
 bool AGhostController::MoveToTile(ATile *Tile) {
+  FString ClassName = this->GetClass()->GetName();
   if (!Tile) {
-    UE_LOG(LogGhostController, Error, TEXT("Target Tile is NULL"));
+    UE_LOG(LogGhostController, Warning,
+           TEXT("Target Tile is NULL for Controller %s"),
+           ClassName.GetCharArray().GetData());
     return false;
   }
 
@@ -43,7 +49,7 @@ bool AGhostController::MoveToTile(ATile *Tile) {
 
   FVector GhostLocation = GetPawn()->GetActorLocation();
 
-  ATile *GhostTile = Grid->GetTileByLocation(GhostLocation.X, GhostLocation.Y);
+  ATile *GhostTile = Grid->GetTileByLocation(GhostLocation);
 
   if (!GhostTile) {
     UE_LOG(LogGhostController, Error, TEXT("No Ghost Tile "));
@@ -58,8 +64,8 @@ bool AGhostController::MoveToTile(ATile *Tile) {
   }
 
   auto Result = MoveToLocation(Tile->GetActorLocation(),
-                               -1,    // AcceptanceRadius
-                               true,  // bStopOnOverlap
+                               1,    // AcceptanceRadius
+                               false, // bStopOnOverlap
                                true,  // bUsePathfinding
                                false, // bProjectDestinationToNavigation
                                true   // bCanStrafe
@@ -78,7 +84,7 @@ void AGhostController::FrigthenedMove() {
 
   FVector GhostLocation = GetPawn()->GetActorLocation();
 
-  ATile *GhostTile = Grid->GetTileByLocation(GhostLocation.X, GhostLocation.Y);
+  ATile *GhostTile = Grid->GetTileByLocation(GhostLocation);
 
   if (!GhostTile) {
     UE_LOG(LogGhostController, Error, TEXT("No Ghost Tile "));
@@ -101,6 +107,67 @@ void AGhostController::FrigthenedMove() {
     FVector ForwardVector = GetPawn()->GetActorForwardVector();
     MoveInDirection(ForwardVector);
   }
+}
+
+void AGhostController::FindPathForMoveRequest(
+    const FAIMoveRequest &MoveRequest, FPathFindingQuery &Query,
+    FNavPathSharedPtr &OutPath) const {
+  UNavigationSystemV1 *NavSys =
+      FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld());
+
+  if (!NavSys) {
+    UE_LOG(LogGhostController, Error,
+           TEXT("Trying to find path to %s resulted in Error"),
+           MoveRequest.IsMoveToActorRequest()
+               ? *GetNameSafe(MoveRequest.GetGoalActor())
+               : *MoveRequest.GetGoalLocation().ToString());
+
+    return;
+  }
+
+  AGrid *Grid = GetGrid();
+
+  if (!Grid) {
+    UE_LOG(LogGhostController, Error, TEXT("No Grid class"));
+    return;
+  }
+
+  FVector GhostLocation = GetPawn()->GetActorLocation();
+
+  ATile *StartTile = Grid->GetTileByLocation(GhostLocation);
+
+  if (!StartTile) {
+    UE_LOG(LogGhostController, Error, TEXT("No Start Tile"));
+    return;
+  }
+
+  FVector GoalLocation = MoveRequest.GetGoalLocation();
+
+  ATile *GoalTile = Grid->GetTileByLocation(GoalLocation);
+
+  if (!GoalTile) {
+    UE_LOG(LogGhostController, Error, TEXT("No Goal Tile"));
+    return;
+  }
+
+  FPathFindingResult PathResult = FindPath(StartTile, GoalTile, Grid);
+
+  if (PathResult.IsSuccessful() && PathResult.Path.IsValid()) {
+    //if (MoveRequest.IsMoveToActorRequest()) {
+      //PathResult.Path->SetGoalActorObservation(*MoveRequest.GetGoalActor(),
+                                               //100.0f);
+    //}
+
+    //PathResult.Path->EnableRecalculationOnInvalidation(true);
+    OutPath = PathResult.Path;
+    return;
+  }
+
+  UE_LOG(LogGhostController, Error,
+         TEXT("Trying to find path to %s resulted in Error"),
+         MoveRequest.IsMoveToActorRequest()
+             ? *GetNameSafe(MoveRequest.GetGoalActor())
+             : *MoveRequest.GetGoalLocation().ToString());
 }
 
 void AGhostController::Tick(float DeltaTime) {}

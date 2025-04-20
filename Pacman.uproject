@@ -14,7 +14,7 @@
 				"UnrealEd",
 				"Navmesh",
 				"AutomationTest",
-                "NavigationSystem"
+				"NavigationSystem"
 			]
 		}
 	],
@@ -28,6 +28,10 @@
 		},
 		{
 			"Name": "EditorTests",
+			"Enabled": true
+		},
+		{
+			"Name": "FunctionalTestingEditor",
 			"Enabled": true
 		}
 	]

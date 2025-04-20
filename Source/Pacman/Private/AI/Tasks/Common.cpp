@@ -1,9 +1,10 @@
 #include "AI/Tasks/Common.h"
 
+#include <algorithm>
+
 #include "AIController.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
-#include "Math/MathFwd.h"
 
 #include "AI/GhostController.h"
 #include "AI/Tasks/Common.h"
@@ -57,26 +58,27 @@ APacmanGameState *GetPacmanGameState(UWorld *World) {
 
 ATile *GetPacmanFrontTile(const FGridPosition &PacmanTilePosition,
                           const APacmanPlayer &Pacman, const AGrid &Grid,
-                          const uint Offset) {
+                          const int Offset) {
   FGridPosition TargetTilePosition = PacmanTilePosition;
 
   switch (Pacman.GetDirection()) {
   case EDirection::kUp:
-    TargetTilePosition.row += Offset;
+    TargetTilePosition.row =
+        std::max(TargetTilePosition.row + Offset, Grid.Width);
     break;
   case EDirection::kDown:
-    TargetTilePosition.row -= Offset;
+    TargetTilePosition.row = std::min(TargetTilePosition.row - Offset, 0);
     break;
   case EDirection::kLeft:
-    TargetTilePosition.col += Offset;
+    TargetTilePosition.col =
+        std::max(TargetTilePosition.col + Offset, Grid.Length);
     break;
   case EDirection::kRight:
-    TargetTilePosition.col -= Offset;
+    TargetTilePosition.col = std::min(TargetTilePosition.col - Offset, 0);
     break;
   default:
-    // do nothing
     break;
   }
 
-  return Grid.GetTileByGridPos(TargetTilePosition);
+  return Grid.GetTileByGridPosition(TargetTilePosition);
 }

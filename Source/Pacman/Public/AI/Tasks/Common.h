@@ -23,4 +23,4 @@ APacmanGameState *GetPacmanGameState(UWorld *World);
 /// direction
 ATile *GetPacmanFrontTile(const FGridPosition &PacmanTilePosition,
                           const APacmanPlayer &Pacman, const AGrid &Grid,
-                          const uint Offset);
+                          const int Offset);

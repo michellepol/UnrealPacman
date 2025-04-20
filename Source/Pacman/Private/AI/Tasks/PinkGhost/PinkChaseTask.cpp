@@ -1,6 +1,5 @@
 #include "AI/Tasks/PinkGhost/PinkChaseTask.h"
 
-#include "AIController.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/MathFwd.h"
@@ -37,8 +36,7 @@ UAITask_PinkChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
   }
 
   FVector PacmanLocation = Pacman->GetActorLocation();
-  FGridPosition PacmanGridPosition =
-      Grid->GetTileGridPosition(PacmanLocation.X, PacmanLocation.Y);
+  FGridPosition PacmanGridPosition = Grid->GetTileGridPosition(PacmanLocation);
 
   ATile *Tile =
       GetPacmanFrontTile(PacmanGridPosition, *Pacman, *Grid, kTilesAheadPacman);
@@ -53,7 +51,11 @@ UAITask_PinkChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
     return EBTNodeResult::Type::Failed;
   }
 
-  GhostController->MoveToTile(Tile);
+  const bool MoveResult = GhostController->MoveToTile(Tile);
+
+  if (!MoveResult) {
+    return EBTNodeResult::Type::Failed;
+  }
 
   return EBTNodeResult::Type::Succeeded;
 }

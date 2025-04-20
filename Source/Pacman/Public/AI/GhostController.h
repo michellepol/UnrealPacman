@@ -4,6 +4,7 @@
 
 #include "AIController.h"
 #include "CoreMinimal.h"
+
 #include "GhostController.generated.h"
 
 class ATile;
@@ -16,7 +17,7 @@ class PACMAN_API AGhostController : public AAIController {
   GENERATED_BODY()
 
 public:
-  AGhostController() = default;
+  AGhostController();
 
   bool MoveToTile(ATile *Tile);
 
@@ -26,8 +27,12 @@ public:
 
   FVector CurrentDirection;
 
+  void FindPathForMoveRequest(const FAIMoveRequest &MoveRequest,
+                              FPathFindingQuery &Query,
+                              FNavPathSharedPtr &OutPath) const override;
+
 private:
-  AGrid *GetGrid();
+  AGrid *GetGrid() const;
 
   void MoveInDirection(FVector Direction, float Speed = 0.1f);
 };

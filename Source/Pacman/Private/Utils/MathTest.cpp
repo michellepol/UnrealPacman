@@ -1,4 +1,3 @@
-#include "CoreMinimal.h"
 #include "Misc/AutomationTest.h"
 
 #include <Utils/Math.h>

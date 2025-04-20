@@ -1,6 +1,5 @@
 #include "AI/Tasks/BlueGhost/BlueChaseTask.h"
 
-#include "AIController.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/MathFwd.h"
@@ -44,8 +43,7 @@ UAITask_BlueChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
 
   FVector PacmanLocation = Pacman->GetActorLocation();
 
-  FGridPosition PacmanGridPosition =
-      Grid->GetTileGridPosition(PacmanLocation.X, PacmanLocation.Y);
+  FGridPosition PacmanGridPosition = Grid->GetTileGridPosition(PacmanLocation);
 
   ATile *Tile =
       GetPacmanFrontTile(PacmanGridPosition, *Pacman, *Grid, kTilesAheadPacman);
@@ -64,8 +62,9 @@ UAITask_BlueChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
 
   FVector RedGhostLocation = RedGhost->GetActorLocation();
 
-  FVector TargetVector(PacmanTileLocation.X - RedGhostLocation.X,
-                       PacmanTileLocation.Y - RedGhostLocation.Y,
+  // FIXME: i guess abs is wrong
+  FVector TargetVector(std::abs(PacmanTileLocation.X - RedGhostLocation.X),
+                       std::abs(PacmanTileLocation.Y - RedGhostLocation.Y),
                        PacmanTileLocation.Z);
 
   // Multiply because target tile of ghost is end of TargetVector multiplied by
@@ -75,8 +74,12 @@ UAITask_BlueChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
 
   FVector TargetLocation = RedGhostLocation + TargetVector;
 
-  GhostController->MoveToTile(
-      Grid->GetTileByLocation(TargetLocation.X, TargetLocation.Y));
+  const bool MoveResult =
+      GhostController->MoveToTile(Grid->GetTileByLocation(TargetLocation));
+
+  if (!MoveResult) {
+    return EBTNodeResult::Type::Failed;
+  }
 
   return EBTNodeResult::Type::Succeeded;
 }

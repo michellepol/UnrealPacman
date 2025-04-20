@@ -18,20 +18,10 @@ USTRUCT(BlueprintType)
 struct FAdjacentTiles {
   GENERATED_BODY()
 
-  ATile **Up;
-  ATile **Left;
-  ATile **Right;
-  ATile **Down;
-};
-
-USTRUCT(BlueprintType)
-struct FGhostScatterPoint {
-  GENERATED_BODY()
-
-  UPROPERTY(BlueprintReadWrite, EditAnywhere)
-  ATile *Tile = nullptr;
-  UPROPERTY(BlueprintReadWrite, EditAnywhere)
-  EGhostType GhostType = EGhostType::kRed;
+  ATile *const *Up;
+  ATile *const *Left;
+  ATile *const *Right;
+  ATile *const *Down;
 };
 
 UCLASS()
@@ -45,31 +35,24 @@ public:
 
   virtual void BeginPlay() override;
 
-  ///@brief Get Tile position in Grid by location in World
-  UFUNCTION(BlueprintCallable)
-  FGridPosition GetTileGridPosition(const int x, const int y) const;
-
-  ///@brief Get Tile by location in World
-  UFUNCTION(BlueprintCallable)
-  ATile *GetTileByLocation(const int x, const int y) const;
+  FGridPosition GetTileGridPosition(const FVector WorldLocation) const;
 
   ///@brief Get Tile by position in Grid
   UFUNCTION(BlueprintCallable)
-  ATile *GetTileByGridPos(const FGridPosition pos) const;
+  ATile *GetTileByGridPosition(const FGridPosition GridPosition) const;
 
-  ATile *GetScatterPoint(const EGhostType GhostType) const;
-
-  ///@brief Calculate amount of cells between two cells
+  ///@brief Get Tile by location in World
   UFUNCTION(BlueprintCallable)
-  int CalcTileDistance(const FGridPosition FirstCell,
-                       const FGridPosition SecondCell);
+  ATile *GetTileByLocation(const FVector WorldLocation) const;
 
   ///@brief Check if current tile is crossroad
   UFUNCTION(BlueprintCallable)
   bool IsCrossRoad(const ATile *Tile, const FAdjacentTiles &AdjacentTiles);
 
   UFUNCTION(BlueprintCallable)
-  FAdjacentTiles GetAdjacentTiles(const ATile *Tile);
+  FAdjacentTiles GetAdjacentTiles(const ATile *Tile) const;
+
+  std::vector<std::vector<int>> ToIntGrid();
 
 public:
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -83,9 +66,6 @@ public:
 
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
   int32 TileSize = 0;
-
-  UPROPERTY(BlueprintReadWrite, EditAnywhere)
-  TArray<FGhostScatterPoint> GhostScatterPoints;
 
 private:
   UFUNCTION()

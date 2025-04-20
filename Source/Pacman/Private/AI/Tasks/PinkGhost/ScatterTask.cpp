@@ -45,6 +45,7 @@ UAITask_PinkScatter::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
     return EBTNodeResult::Type::Failed;
   }
 
+  /*
   ATile *Tile = Grid->GetScatterPoint(EGhostType::kPink);
 
   if (!Tile) {
@@ -60,6 +61,7 @@ UAITask_PinkScatter::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
   }
 
   GhostController->MoveToTile(Tile);
+  */
 
   return EBTNodeResult::Type::InProgress;
 }
