@@ -37,9 +37,10 @@ int Manhattan(const int source_row, const int source_col, const int target_row,
   return delta_col + delta_row;
 }
 
-std::vector<Node *> GetNeigbours(Node *current,
-  std::unordered_map<FGridPosition, Node, GridPositionHash> &nodes,
-                                 const TArray<TArray<int>> &grid) {
+std::vector<Node *>
+GetNeigbours(Node *current,
+             std::unordered_map<FGridPosition, Node, GridPositionHash> &nodes,
+             const TArray<TArray<int>> &grid) {
   std::vector<Node *> neighbors;
 
   for (int i = 0; i < kDirection.size(); i++) {
@@ -52,7 +53,9 @@ std::vector<Node *> GetNeigbours(Node *current,
 
     auto neighbor_pos = FGridPosition{new_row, new_col};
 
-    Node *node = &nodes.emplace(neighbor_pos, Node(neighbor_pos.row, neighbor_pos.col)).first->second;
+    Node *node =
+        &nodes.emplace(neighbor_pos, Node(neighbor_pos.row, neighbor_pos.col))
+             .first->second;
     neighbors.push_back(node);
   }
 
@@ -69,18 +72,13 @@ TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
   std::priority_queue<Node *, std::vector<Node *>, NodeCompare> frontier;
 
   // Create or get existing nodes to avoid duplicates
-  Node &start = nodes.emplace(start_pos, Node(start_pos.row, start_pos.col)).first->second;
-  Node &goal = nodes.emplace(goal_pos, Node(goal_pos.row, goal_pos.col)).first->second;
+  Node &start = nodes.emplace(start_pos, Node(start_pos.row, start_pos.col))
+                    .first->second;
+  Node &goal =
+      nodes.emplace(goal_pos, Node(goal_pos.row, goal_pos.col)).first->second;
   frontier.push(&start);
 
-  // Track visited nodes
-  TSet<FGridPosition> visited;
-
-  // Add iteration limits
-  int iterations = 0;
-  const int MAX_ITERATIONS = 1000;
-
-  while (!frontier.empty() && iterations++ < MAX_ITERATIONS) {
+  while (!frontier.empty() ) {
     Node *current = frontier.top();
     frontier.pop();
 
@@ -89,14 +87,7 @@ TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
       continue;
     }
 
-    // Before processing a node:
-    if (visited.Contains({current->row, current->col})) {
-      continue;
-    }
-    visited.Add({current->row, current->col});
-
     if (*current == goal) {
-      goal.parent = current->parent;
       break;
     }
 
@@ -118,13 +109,23 @@ TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
   TArray<FGridPosition> path;
 
   Node *current = &goal;
+  
+  // Track visited nodes
+  TSet<FGridPosition> visited;
 
   while (current != nullptr) {
     FGridPosition current_pos = {.row = current->row, .col = current->col};
-    path.Push(current_pos);
-    current = current->parent;
+      // Before processing a node:
+      if (visited.Contains({current->row, current->col})) {
+        UE_LOG(LogTemp, Warning, TEXT("Visited loop node: %d, %d"), current->row, current->col);
+        break;
+      }
+      visited.Add({current->row, current->col});
+      path.Push(current_pos);
+      current = current->parent;
   }
   Algo::Reverse(path);
+
 
   nodes.clear();
 
@@ -136,12 +137,12 @@ FPathFindingResult FindPath(ATile *Start, ATile *Goal, AGrid *Grid) {
     return FPathFindingResult();
   }
 
-  const auto& int_grid = Grid->GetIntGrid();
+  const auto &int_grid = Grid->GetIntGrid();
   FGridPosition start_pos = Start->GetGridPosition();
   FGridPosition goal_pos = Goal->GetGridPosition();
 
   TArray<FGridPosition> GridPath = AStar(int_grid, start_pos, goal_pos);
-
+  
   TArray<FVector3d> Points;
   for (const auto &GridPos : GridPath) {
     ATile *Tile = Grid->GetTileByGridPosition(GridPos);
@@ -156,10 +157,6 @@ FPathFindingResult FindPath(ATile *Start, ATile *Goal, AGrid *Grid) {
   result.Result = Points.Num() > 1 ? ENavigationQueryResult::Type::Success
                                    : ENavigationQueryResult::Type::Fail;
   result.Path = MakeShared<FNavigationPath>(FNavigationPath(Points));
-
-  // Enable memory stats
-  UE_LOG(LogTemp, Warning, TEXT("Memory Usage: %d KB"), 
-      FPlatformMemory::GetStats().UsedPhysical / 1024);
 
   return result;
 }
