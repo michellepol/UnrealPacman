@@ -3,6 +3,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "UObject/ObjectMacros.h"
+#include "NavigationPath.h"
+#include "NavigationSystem.h"
 
 #include "AI/Ghost.h"
 #include "Level/Direction.h"
@@ -52,7 +54,9 @@ public:
   UFUNCTION(BlueprintCallable)
   FAdjacentTiles GetAdjacentTiles(const ATile *Tile) const;
 
-  std::vector<std::vector<int>> ToIntGrid();
+  TArray<TArray<int>> ToIntGrid();
+
+  const TArray<TArray<int>> &GetIntGrid() const;
 
 public:
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -72,4 +76,6 @@ private:
   void OnEditorPlaced(UObject *Object, const TArray<AActor *> &Actors);
 
   TMap<FGridPosition, ATile *> GridTilesIndex;
+
+  TArray<TArray<int>> GridInt;
 };

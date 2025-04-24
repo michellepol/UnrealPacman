@@ -34,6 +34,15 @@ void DeleteRelatedActors(TArray<AActor *> Actors) {
   }
 }
 
+bool DetectCollision(const int row, const int col,
+                     const std::vector<std::vector<int>> &grid) {
+  if (grid.empty() || col < 0 || col >= grid[0].size() || row < 0 || row >= grid.size() ||
+      grid[row][col] == 1) {
+    return true;
+  }
+  return false;
+}
+
 } // namespace
 
 AGrid::AGrid() {
@@ -72,6 +81,8 @@ void AGrid::BeginPlay() {
 
     GridTilesIndex.Add(Position, Tile);
   }
+
+  GridInt = ToIntGrid();
 }
 
 FGridPosition AGrid::GetTileGridPosition(const FVector WorldLocation) const {
@@ -168,12 +179,18 @@ FAdjacentTiles AGrid::GetAdjacentTiles(const ATile *Tile) const {
   };
 }
 
-std::vector<std::vector<int>> AGrid::ToIntGrid() {
-  std::vector<std::vector<int>> result;
-  result.reserve(Width);
+TArray<TArray<int>> AGrid::ToIntGrid() {
+  if (GridTilesIndex.IsEmpty()) {
+    UE_LOG(LogGrid, Error, TEXT("GridTilesIndex is empty"));
+    return {};
+  }
+
+  TArray<TArray<int>> result;
+  result.Reserve(Width);
 
   for (int row = 0; row < Width; row++) {
-    std::vector<int> int_row(Length);
+    TArray<int> int_row;
+    int_row.Init(0, Length);
     for (int col = 0; col < Length; col++) {
 
       ATile **IndexValue =
@@ -192,11 +209,13 @@ std::vector<std::vector<int>> AGrid::ToIntGrid() {
         int_row[col] = 0;
       }
     }
-    result.push_back(int_row);
+    result.Add(int_row);
   }
 
   return result;
 }
+
+const TArray<TArray<int>> &AGrid::GetIntGrid() const { return GridInt; }
 
 void AGrid::OnEditorPlaced(UObject *Object, const TArray<AActor *> &Actors) {
   if (!IsGridActorPlaced(this, Actors)) {

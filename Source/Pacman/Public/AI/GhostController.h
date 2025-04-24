@@ -4,6 +4,7 @@
 
 #include "AIController.h"
 #include "CoreMinimal.h"
+#include "Level/GridPosition.h"
 
 #include "GhostController.generated.h"
 
@@ -25,7 +26,8 @@ public:
 
   void Tick(float DeltaTime) override;
 
-  FVector CurrentDirection;
+  FGridPosition LastGoalLocation;
+  FGridPosition LastGhostLocation;
 
   void FindPathForMoveRequest(const FAIMoveRequest &MoveRequest,
                               FPathFindingQuery &Query,

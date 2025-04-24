@@ -22,8 +22,8 @@ const std::vector<std::vector<int>> kDirection = {
 };
 
 bool DetectCollision(const int row, const int col,
-                     const std::vector<std::vector<int>> &grid) {
-  if (col < 0 || col >= grid[0].size() || row < 0 || row >= grid.size() ||
+                     const TArray<TArray<int>> &grid) {
+  if (col < 0 || col >= grid[0].Num() || row < 0 || row >= grid.Num() ||
       grid[row][col] == 1) {
     return true;
   }
@@ -38,8 +38,8 @@ int Manhattan(const int source_row, const int source_col, const int target_row,
 }
 
 std::vector<Node *> GetNeigbours(Node *current,
-                                 TMap<FGridPosition, Node *> &nodes,
-                                 const std::vector<std::vector<int>> &grid) {
+  std::unordered_map<FGridPosition, Node, GridPositionHash> &nodes,
+                                 const TArray<TArray<int>> &grid) {
   std::vector<Node *> neighbors;
 
   for (int i = 0; i < kDirection.size(); i++) {
@@ -52,46 +52,51 @@ std::vector<Node *> GetNeigbours(Node *current,
 
     auto neighbor_pos = FGridPosition{new_row, new_col};
 
-    Node **node_ptr = nodes.Find(neighbor_pos);
-    if (node_ptr) {
-      neighbors.push_back(*node_ptr);
-    } else {
-      Node *new_node = new Node(neighbor_pos.row, neighbor_pos.col);
-      neighbors.push_back(new_node);
-      nodes.Add(neighbor_pos, new_node);
-    }
+    Node *node = &nodes.emplace(neighbor_pos, Node(neighbor_pos.row, neighbor_pos.col)).first->second;
+    neighbors.push_back(node);
   }
 
   return neighbors;
 }
 
-TArray<FGridPosition> AStar(const std::vector<std::vector<int>> &grid,
+TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
                             const FGridPosition start_pos,
                             const FGridPosition goal_pos) {
-  // Создаем начальный и целевой узлы
-  Node *start = new Node(start_pos.row, start_pos.col);
-  Node *goal = new Node(goal_pos.row, goal_pos.col);
-
   static const int kDefaultCost = 1;
 
-  std::priority_queue<Node *> frontier;
-  TMap<FGridPosition, Node *> nodes = {{start_pos, start}, {goal_pos, goal}};
-  frontier.push(start);
+  static std::unordered_map<FGridPosition, Node, GridPositionHash> nodes;
 
-  int distance = 0;
+  std::priority_queue<Node *, std::vector<Node *>, NodeCompare> frontier;
 
-  while (!frontier.empty()) {
+  // Create or get existing nodes to avoid duplicates
+  Node &start = nodes.emplace(start_pos, Node(start_pos.row, start_pos.col)).first->second;
+  Node &goal = nodes.emplace(goal_pos, Node(goal_pos.row, goal_pos.col)).first->second;
+  frontier.push(&start);
 
-    if (distance > 1000) {
-      break;
-    }
-    distance++;
+  // Track visited nodes
+  TSet<FGridPosition> visited;
 
-    auto *current = frontier.top();
+  // Add iteration limits
+  int iterations = 0;
+  const int MAX_ITERATIONS = 1000;
+
+  while (!frontier.empty() && iterations++ < MAX_ITERATIONS) {
+    Node *current = frontier.top();
     frontier.pop();
 
-    if (current == goal) {
-      goal->parent = current->parent;
+    // Skip nodes too far from goal
+    if (Manhattan(current->row, current->col, goal.row, goal.col) > 100) {
+      continue;
+    }
+
+    // Before processing a node:
+    if (visited.Contains({current->row, current->col})) {
+      continue;
+    }
+    visited.Add({current->row, current->col});
+
+    if (*current == goal) {
+      goal.parent = current->parent;
       break;
     }
 
@@ -102,7 +107,7 @@ TArray<FGridPosition> AStar(const std::vector<std::vector<int>> &grid,
 
       if (next->g == 0 || new_cost < next->g) {
         next->g = new_cost;
-        next->h = Manhattan(next->row, next->col, goal->row, goal->col);
+        next->h = Manhattan(next->row, next->col, goal.row, goal.col);
 
         frontier.push(next);
         next->parent = current;
@@ -112,7 +117,7 @@ TArray<FGridPosition> AStar(const std::vector<std::vector<int>> &grid,
 
   TArray<FGridPosition> path;
 
-  Node *current = goal;
+  Node *current = &goal;
 
   while (current != nullptr) {
     FGridPosition current_pos = {.row = current->row, .col = current->col};
@@ -121,11 +126,7 @@ TArray<FGridPosition> AStar(const std::vector<std::vector<int>> &grid,
   }
   Algo::Reverse(path);
 
-  for (auto &[pos, node] : nodes) {
-    delete node;
-  }
-
-  UE_LOG(LogTemp, Error, TEXT("Found Path, %i"), path.Num());
+  nodes.clear();
 
   return path;
 }
@@ -135,12 +136,11 @@ FPathFindingResult FindPath(ATile *Start, ATile *Goal, AGrid *Grid) {
     return FPathFindingResult();
   }
 
-  // TODO: optimize
-  auto grid = Grid->ToIntGrid();
+  const auto& int_grid = Grid->GetIntGrid();
   FGridPosition start_pos = Start->GetGridPosition();
   FGridPosition goal_pos = Goal->GetGridPosition();
 
-  TArray<FGridPosition> GridPath = AStar(grid, start_pos, goal_pos);
+  TArray<FGridPosition> GridPath = AStar(int_grid, start_pos, goal_pos);
 
   TArray<FVector3d> Points;
   for (const auto &GridPos : GridPath) {
@@ -149,7 +149,6 @@ FPathFindingResult FindPath(ATile *Start, ATile *Goal, AGrid *Grid) {
       UE_LOG(LogTemp, Error, TEXT("No Tile in Path"));
       continue;
     }
-    Tile->SetDebugMaterial();
     Points.Push(Tile->GetActorLocation());
   }
 
@@ -157,6 +156,10 @@ FPathFindingResult FindPath(ATile *Start, ATile *Goal, AGrid *Grid) {
   result.Result = Points.Num() > 1 ? ENavigationQueryResult::Type::Success
                                    : ENavigationQueryResult::Type::Fail;
   result.Path = MakeShared<FNavigationPath>(FNavigationPath(Points));
+
+  // Enable memory stats
+  UE_LOG(LogTemp, Warning, TEXT("Memory Usage: %d KB"), 
+      FPlatformMemory::GetStats().UsedPhysical / 1024);
 
   return result;
 }

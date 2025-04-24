@@ -38,8 +38,15 @@ struct NodeHash {
   size_t operator()(const Node *node) const { return GetTypeHash(*node); }
 };
 
+struct NodeCompare {
+    bool operator()(const Node* a, const Node* b) {
+        return a->GetScore() > b->GetScore();
+    }
+};
+
+
 FPathFindingResult FindPath(ATile *Start, ATile *Goal, AGrid *Grid);
 
-TArray<FGridPosition> AStar(const std::vector<std::vector<int>> &grid,
+TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
                             const FGridPosition start_pos,
                             const FGridPosition goal_pos);

@@ -13,6 +13,10 @@ struct FGridPosition {
 
   UPROPERTY(BlueprintReadWrite)
   int col = 0;
+  
+  bool operator!=(const FGridPosition &other) const {
+    return row != other.row || col != other.col;
+  }
 };
 
 ///@brief Generate hash for Grid position
@@ -25,5 +29,9 @@ FORCEINLINE uint32 GetTypeHash(const FGridPosition &Pos) {
 
   return HashCombine(RowHash, ColHash);
 }
+
+struct GridPositionHash {
+  size_t operator()(const FGridPosition &pos) const { return GetTypeHash(pos); }
+};
 
 bool operator==(const FGridPosition lhs, const FGridPosition rhs);

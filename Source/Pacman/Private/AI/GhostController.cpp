@@ -56,6 +56,14 @@ bool AGhostController::MoveToTile(ATile *Tile) {
     return false;
   }
 
+  if(LastGhostLocation == GhostTile->GetGridPosition() && LastGoalLocation == Tile->GetGridPosition()) { 
+    UE_LOG(LogGhostController, Warning, TEXT("GhostController::MoveToTile: Skip move to tile"));
+    return true;
+  }
+
+  LastGhostLocation = GhostTile->GetGridPosition();
+  LastGoalLocation = Tile->GetGridPosition(); 
+
   AGhost *Ghost = Cast<AGhost>(GetPawn());
   if (!Ghost) {
     UE_LOG(LogGhostController, Error,

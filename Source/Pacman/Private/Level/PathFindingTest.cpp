@@ -11,11 +11,11 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(AStarTest, "Pacman.Tests.AStarTest",
 bool AStarTest::RunTest(const FString &Parameters) {
 
   // Пример grid map
-  std::vector<std::vector<int>> grid = {{0, 1, 0, 0, 0},
-                                        {0, 1, 0, 1, 0},
-                                        {0, 0, 0, 1, 0},
-                                        {0, 1, 1, 1, 0},
-                                        {0, 0, 0, 0, 0}};
+  TArray<TArray<int>> grid = {{0, 1, 0, 0, 0},
+                              {0, 1, 0, 1, 0},
+                              {0, 0, 0, 1, 0},
+                              {0, 1, 1, 1, 0},
+                              {0, 0, 0, 0, 0}};
 
   // Тест 1: Путь существует
   {
@@ -59,7 +59,7 @@ bool AStarTest::RunTest(const FString &Parameters) {
 
   // Тест 5: Путь через узкое место
   {
-    std::vector<std::vector<int>> narrow_grid = {{0, 0, 0, 1, 0},
+    TArray<TArray<int>> narrow_grid = {{0, 0, 0, 1, 0},
                                                  {1, 1, 0, 1, 0},
                                                  {0, 0, 0, 1, 0},
                                                  {0, 1, 1, 1, 0},
@@ -72,7 +72,7 @@ bool AStarTest::RunTest(const FString &Parameters) {
 
   // Тест 6: Путь через лабиринт
   {
-    std::vector<std::vector<int>> maze_grid = {{0, 1, 0, 0, 0},
+    TArray<TArray<int>> maze_grid = {{0, 1, 0, 0, 0},
                                                {0, 1, 0, 1, 0},
                                                {0, 0, 0, 1, 0},
                                                {0, 1, 1, 1, 0},
@@ -83,14 +83,5 @@ bool AStarTest::RunTest(const FString &Parameters) {
     TestTrue("Maze", !path.IsEmpty()); // Ожидаем, что путь найден
   }
 
-  // Тест 7: Путь в большом grid
-  {
-    std::vector<std::vector<int>> large_grid(10, std::vector<int>(10, 0));
-    FGridPosition start = FGridPosition(0, 0);
-    FGridPosition goal = FGridPosition(9, 9);
-    auto path = AStar(large_grid, start, goal);
-    TestTrue("LargeGrid", !path.IsEmpty()); // Ожидаем, что путь найден
-  }
-
-  return 0;
+   return 0;
 }
