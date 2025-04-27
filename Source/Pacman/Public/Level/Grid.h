@@ -20,10 +20,20 @@ USTRUCT(BlueprintType)
 struct FAdjacentTiles {
   GENERATED_BODY()
 
-  ATile *const *Up;
-  ATile *const *Left;
-  ATile *const *Right;
-  ATile *const *Down;
+  ATile *Up = nullptr;
+  ATile *Left = nullptr;
+  ATile *Right = nullptr;
+  ATile *Down = nullptr;
+
+  TArray<ATile * > ToArray() const {
+    TArray<ATile* > PtrArray;
+    PtrArray.SetNum(4);
+    PtrArray[0] = Up;
+    PtrArray[1] = Left;
+    PtrArray[2] = Right;
+    PtrArray[3] = Down;
+    return PtrArray;
+  }
 };
 
 UCLASS()

@@ -31,6 +31,8 @@ public:
 
   FGridPosition GetGridPosition() const;
 
+  ETileType GetTileType() const;
+
 protected:
   virtual void BeginPlay() override;
 

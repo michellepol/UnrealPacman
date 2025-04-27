@@ -37,9 +37,11 @@ UAITask_PinkChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
 
   FVector PacmanLocation = Pacman->GetActorLocation();
   FGridPosition PacmanGridPosition = Grid->GetTileGridPosition(PacmanLocation);
+  
+  UE_LOG(LogTask, Log, TEXT("Pacman Grid Position: row %i, col %i"), PacmanGridPosition.row, PacmanGridPosition.col);
 
   ATile *Tile =
-      GetPacmanFrontTile(PacmanGridPosition, *Pacman, *Grid, kTilesAheadPacman);
+      GetPacmanFrontTile(PacmanGridPosition, *Pacman, *Grid, 4);
 
   if (Tile) {
     Tile->SetDebugMaterial();

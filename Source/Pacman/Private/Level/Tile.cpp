@@ -56,6 +56,8 @@ void ATile::SetGridPosition(const FGridPosition NewGridPosition) {
 
 FGridPosition ATile::GetGridPosition() const { return GridPosition; }
 
+ETileType ATile::GetTileType() const { return TileType; }
+
 void ATile::SetStaticMeshByTileType() {
   switch (TileType) {
   case ETileType::Wall:

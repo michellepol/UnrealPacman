@@ -124,27 +124,25 @@ bool AGrid::IsCrossRoad(const ATile *Tile,
   int TilesIsNotWall = 0;
 
   // up
-  if (AdjacentTiles.Up && (*AdjacentTiles.Up)->TileType == ETileType::Floor) {
+  if (AdjacentTiles.Up && AdjacentTiles.Up->TileType == ETileType::Floor) {
     TilesIsNotWall += 1;
   }
 
   // right
-  if (AdjacentTiles.Right &&
-      (*AdjacentTiles.Right)->TileType == ETileType::Floor) {
+  if (AdjacentTiles.Right && AdjacentTiles.Right->TileType == ETileType::Floor) {
     TilesIsNotWall += 1;
   }
 
   // left
-  if (AdjacentTiles.Left &&
-      (*AdjacentTiles.Left)->TileType == ETileType::Floor) {
+  if (AdjacentTiles.Left && AdjacentTiles.Left->TileType == ETileType::Floor) {
     TilesIsNotWall += 1;
   }
 
   // down
-  if (AdjacentTiles.Down &&
-      (*AdjacentTiles.Down)->TileType == ETileType::Floor) {
+  if (AdjacentTiles.Down && AdjacentTiles.Down->TileType == ETileType::Floor) {
     TilesIsNotWall += 1;
   }
+  
 
   // There is 2 floor tiles
   // =============
@@ -161,22 +159,38 @@ bool AGrid::IsCrossRoad(const ATile *Tile,
 UFUNCTION(BlueprintCallable)
 FAdjacentTiles AGrid::GetAdjacentTiles(const ATile *Tile) const {
   FGridPosition GridPosition = Tile->GetGridPosition();
+  
+  FAdjacentTiles AdjacentTiles;
 
   FGridPosition UpPosition =
       FGridPosition(GridPosition.row + 1, GridPosition.col);
+  auto *UpTile = GridTilesIndex.Find(UpPosition);
+  if(UpTile) {
+    AdjacentTiles.Up = *UpTile;
+  }
+
   FGridPosition RightPosition =
       FGridPosition(GridPosition.row, GridPosition.col + 1);
+  auto *RightTile = GridTilesIndex.Find(RightPosition);
+  if(RightTile) {
+    AdjacentTiles.Right = *RightTile;
+  }
+
   FGridPosition LeftPosition =
       FGridPosition(GridPosition.row, GridPosition.col - 1);
+  auto *LeftTile = GridTilesIndex.Find(LeftPosition);
+  if(LeftTile) {
+    AdjacentTiles.Left = *LeftTile;
+  }
+
   FGridPosition DownPosition =
       FGridPosition(GridPosition.row - 1, GridPosition.col);
+  auto *DownTile = GridTilesIndex.Find(DownPosition);
+  if(DownTile) {
+    AdjacentTiles.Down = *DownTile;
+  }
 
-  return FAdjacentTiles{
-      .Up = GridTilesIndex.Find(UpPosition),
-      .Left = GridTilesIndex.Find(LeftPosition),
-      .Right = GridTilesIndex.Find(RightPosition),
-      .Down = GridTilesIndex.Find(DownPosition),
-  };
+  return AdjacentTiles;
 }
 
 TArray<TArray<int>> AGrid::ToIntGrid() {

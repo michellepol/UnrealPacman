@@ -64,21 +64,23 @@ ATile *GetPacmanFrontTile(const FGridPosition &PacmanTilePosition,
   switch (Pacman.GetDirection()) {
   case EDirection::kUp:
     TargetTilePosition.row =
-        std::max(TargetTilePosition.row + Offset, Grid.Width);
+        std::min(TargetTilePosition.row + Offset, Grid.Width - 1);
     break;
   case EDirection::kDown:
-    TargetTilePosition.row = std::min(TargetTilePosition.row - Offset, 0);
+    TargetTilePosition.row = std::max(TargetTilePosition.row - Offset, 0);
     break;
   case EDirection::kLeft:
     TargetTilePosition.col =
-        std::max(TargetTilePosition.col + Offset, Grid.Length);
+        std::min(TargetTilePosition.col + Offset, Grid.Length - 1);
     break;
   case EDirection::kRight:
-    TargetTilePosition.col = std::min(TargetTilePosition.col - Offset, 0);
+    TargetTilePosition.col = std::max(TargetTilePosition.col - Offset, 0);
     break;
   default:
-    break;
+    return nullptr;
   }
+  
+  UE_LOG(LogTask, Log, TEXT("Front Tile: row %i, col %i"), TargetTilePosition.row, TargetTilePosition.col);
 
   return Grid.GetTileByGridPosition(TargetTilePosition);
 }

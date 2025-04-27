@@ -31,9 +31,9 @@ AGrid *AGhostController::GetGrid() const {
   return GameState->GetGrid();
 }
 
-bool AGhostController::MoveToTile(ATile *Tile) {
+bool AGhostController::MoveToTile(ATile *GoalTile) {
   FString ClassName = this->GetClass()->GetName();
-  if (!Tile) {
+  if (!GoalTile) {
     UE_LOG(LogGhostController, Warning,
            TEXT("Target Tile is NULL for Controller %s"),
            ClassName.GetCharArray().GetData());
@@ -47,6 +47,18 @@ bool AGhostController::MoveToTile(ATile *Tile) {
     return false;
   }
 
+  // If goal tile is wall, find adjacent floor tile
+  ATile *Goal = GoalTile;
+  if (Goal->GetTileType() == ETileType::Wall) {
+    TArray<ATile * > AdjacentTiles = Grid->GetAdjacentTiles(GoalTile).ToArray();
+    for (ATile * Tile : AdjacentTiles) {
+      if (Tile && Tile->GetTileType() == ETileType::Floor) {
+        Goal = Tile;
+        break;
+      }
+    }
+  }
+
   FVector GhostLocation = GetPawn()->GetActorLocation();
 
   ATile *GhostTile = Grid->GetTileByLocation(GhostLocation);
@@ -56,12 +68,13 @@ bool AGhostController::MoveToTile(ATile *Tile) {
     return false;
   }
 
-  if(LastGhostLocation == GhostTile->GetGridPosition() && LastGoalLocation == Tile->GetGridPosition()) { 
+  if (LastGhostLocation == GhostTile->GetGridPosition() &&
+      LastGoalLocation == Goal->GetGridPosition()) {
     return false;
   }
 
   LastGhostLocation = GhostTile->GetGridPosition();
-  LastGoalLocation = Tile->GetGridPosition(); 
+  LastGoalLocation = Goal->GetGridPosition();
 
   AGhost *Ghost = Cast<AGhost>(GetPawn());
   if (!Ghost) {
@@ -70,8 +83,8 @@ bool AGhostController::MoveToTile(ATile *Tile) {
     return false;
   }
 
-  auto Result = MoveToLocation(Tile->GetActorLocation(),
-                               1,    // AcceptanceRadius
+  auto Result = MoveToLocation(Goal->GetActorLocation(),
+                               1,     // AcceptanceRadius
                                false, // bStopOnOverlap
                                true,  // bUsePathfinding
                                false, // bProjectDestinationToNavigation
@@ -160,12 +173,6 @@ void AGhostController::FindPathForMoveRequest(
   FPathFindingResult PathResult = FindPath(StartTile, GoalTile, Grid);
 
   if (PathResult.IsSuccessful() && PathResult.Path.IsValid()) {
-    //if (MoveRequest.IsMoveToActorRequest()) {
-      //PathResult.Path->SetGoalActorObservation(*MoveRequest.GetGoalActor(),
-                                               //100.0f);
-    //}
-
-    //PathResult.Path->EnableRecalculationOnInvalidation(true);
     OutPath = PathResult.Path;
     return;
   }

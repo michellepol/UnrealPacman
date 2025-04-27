@@ -62,7 +62,6 @@ UAITask_BlueChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
 
   FVector RedGhostLocation = RedGhost->GetActorLocation();
 
-  // FIXME: i guess abs is wrong
   FVector TargetVector(std::abs(PacmanTileLocation.X - RedGhostLocation.X),
                        std::abs(PacmanTileLocation.Y - RedGhostLocation.Y),
                        PacmanTileLocation.Z);

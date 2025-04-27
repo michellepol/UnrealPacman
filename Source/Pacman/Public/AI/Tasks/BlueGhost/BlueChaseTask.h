@@ -20,7 +20,7 @@ class PACMAN_API UAITask_BlueChase : public UBTTaskNode {
 public:
   UAITask_BlueChase();
 
-  const static uint kTilesAheadPacman = 2;
+  const static int kTilesAheadPacman = 3;
 
 protected:
   virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp,
