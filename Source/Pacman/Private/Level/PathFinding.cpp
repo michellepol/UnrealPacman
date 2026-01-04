@@ -78,7 +78,7 @@ TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
       nodes.emplace(goal_pos, Node(goal_pos.row, goal_pos.col)).first->second;
   frontier.push(&start);
 
-  while (!frontier.empty() ) {
+  while (!frontier.empty()) {
     Node *current = frontier.top();
     frontier.pop();
 
@@ -109,23 +109,23 @@ TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
   TArray<FGridPosition> path;
 
   Node *current = &goal;
-  
+
   // Track visited nodes
   TSet<FGridPosition> visited;
 
   while (current != nullptr) {
     FGridPosition current_pos = {.row = current->row, .col = current->col};
-      // Before processing a node:
-      if (visited.Contains({current->row, current->col})) {
-        UE_LOG(LogTemp, Warning, TEXT("Visited loop node: %d, %d"), current->row, current->col);
-        break;
-      }
-      visited.Add({current->row, current->col});
-      path.Push(current_pos);
-      current = current->parent;
+    // Before processing a node:
+    if (visited.Contains({current->row, current->col})) {
+      UE_LOG(LogTemp, Warning, TEXT("Visited loop node: %d, %d"), current->row,
+             current->col);
+      break;
+    }
+    visited.Add({current->row, current->col});
+    path.Push(current_pos);
+    current = current->parent;
   }
   Algo::Reverse(path);
-
 
   nodes.clear();
 
@@ -142,7 +142,7 @@ FPathFindingResult FindPath(ATile *Start, ATile *Goal, AGrid *Grid) {
   FGridPosition goal_pos = Goal->GetGridPosition();
 
   TArray<FGridPosition> GridPath = AStar(int_grid, start_pos, goal_pos);
-  
+
   TArray<FVector3d> Points;
   for (const auto &GridPos : GridPath) {
     ATile *Tile = Grid->GetTileByGridPosition(GridPos);

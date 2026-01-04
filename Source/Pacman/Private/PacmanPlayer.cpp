@@ -17,6 +17,8 @@ APacmanPlayer::APacmanPlayer() {
   UCapsuleComponent *CollisionComponent = GetCapsuleComponent();
   CollisionComponent->SetGenerateOverlapEvents(true);
   CollisionComponent->SetCollisionProfileName(FName("OverlapAllDynamic"));
+
+  SetRootComponent(CollisionComponent);
 }
 
 // Called to bind functionality to input

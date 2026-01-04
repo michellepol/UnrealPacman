@@ -4,6 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Math/MathFwd.h"
 
+#include "AI/Ghost.h"
 #include "AI/GhostController.h"
 #include "AI/Tasks/Common.h"
 #include "Level/Tile.h"
@@ -37,15 +38,12 @@ UAITask_PinkChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
 
   FVector PacmanLocation = Pacman->GetActorLocation();
   FGridPosition PacmanGridPosition = Grid->GetTileGridPosition(PacmanLocation);
-  
-  UE_LOG(LogTask, Log, TEXT("Pacman Grid Position: row %i, col %i"), PacmanGridPosition.row, PacmanGridPosition.col);
 
-  ATile *Tile =
+  UE_LOG(LogTask, Log, TEXT("Pacman Grid Position: row %i, col %i"),
+         PacmanGridPosition.row, PacmanGridPosition.col);
+
+  ATile *CurrentTile =
       GetPacmanFrontTile(PacmanGridPosition, *Pacman, *Grid, 4);
-
-  if (Tile) {
-    Tile->SetDebugMaterial();
-  }
 
   AGhostController *GhostController = GetGhostController(OwnerComp);
   if (GhostController == nullptr) {
@@ -53,7 +51,9 @@ UAITask_PinkChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
     return EBTNodeResult::Type::Failed;
   }
 
-  const bool MoveResult = GhostController->MoveToTile(Tile);
+  const bool MoveResult = GhostController->MoveToTile(CurrentTile);
+
+  PreviousTile = CurrentTile;
 
   if (!MoveResult) {
     return EBTNodeResult::Type::Failed;

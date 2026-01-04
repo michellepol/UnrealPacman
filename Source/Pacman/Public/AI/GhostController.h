@@ -33,8 +33,12 @@ public:
                               FPathFindingQuery &Query,
                               FNavPathSharedPtr &OutPath) const override;
 
+  FNavPathSharedPtr GetCurrentPath();
+
 private:
   AGrid *GetGrid() const;
 
   void MoveInDirection(FVector Direction, float Speed = 0.1f);
+
+  mutable FNavPathSharedPtr CurrentPath;
 };

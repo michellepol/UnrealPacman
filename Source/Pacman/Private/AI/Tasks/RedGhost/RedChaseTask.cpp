@@ -6,8 +6,8 @@
 
 #include "AI/GhostController.h"
 #include "AI/Tasks/Common.h"
-#include "PacmanGameState.h"
 #include "Level/Tile.h"
+#include "PacmanGameState.h"
 #include "PacmanPlayer.h"
 
 UAITask_RedChase::UAITask_RedChase() { NodeName = "Red Ghost Chase Task"; }
@@ -43,10 +43,9 @@ UAITask_RedChase::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
 
   FVector PacmanLocation = Pacman->GetActorLocation();
 
-  ATile* TargetTile = Grid->GetTileByLocation(PacmanLocation);
+  ATile *TargetTile = Grid->GetTileByLocation(PacmanLocation);
 
-  const bool MoveResult =
-      GhostController->MoveToTile(TargetTile);
+  const bool MoveResult = GhostController->MoveToTile(TargetTile);
 
   if (!MoveResult) {
     return EBTNodeResult::Type::Failed;

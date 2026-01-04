@@ -14,6 +14,9 @@ public:
   // Sets default values for this actor's properties
   APowerUpPickupActor();
 
+  UPROPERTY(EditAnywhere)
+  float ScoreBonus = 50.0f;
+
 protected:
   // Called when the game starts or when spawned
   virtual void BeginPlay() override;

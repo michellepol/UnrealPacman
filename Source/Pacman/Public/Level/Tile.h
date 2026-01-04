@@ -36,6 +36,11 @@ public:
 protected:
   virtual void BeginPlay() override;
 
+  ///@brief Called when an instance of this class is placed (in editor) or
+  /// spawned.
+  ///
+  ///@details Overrided for changing type of static mesh (floor or wall)
+  /// dynamically in Editor
   virtual void OnConstruction(const FTransform &Transform) override;
 
 public:

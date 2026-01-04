@@ -36,8 +36,8 @@ void DeleteRelatedActors(TArray<AActor *> Actors) {
 
 bool DetectCollision(const int row, const int col,
                      const std::vector<std::vector<int>> &grid) {
-  if (grid.empty() || col < 0 || col >= grid[0].size() || row < 0 || row >= grid.size() ||
-      grid[row][col] == 1) {
+  if (grid.empty() || col < 0 || col >= grid[0].size() || row < 0 ||
+      row >= grid.size() || grid[row][col] == 1) {
     return true;
   }
   return false;
@@ -87,10 +87,10 @@ void AGrid::BeginPlay() {
 
 FGridPosition AGrid::GetTileGridPosition(const FVector WorldLocation) const {
   FVector GridLocation = this->GetActorLocation();
-  const int row = (WorldLocation.Y - GridLocation.Y) / TileSize;
-  const int col = (WorldLocation.X - GridLocation.X) / TileSize;
+  const float row = (WorldLocation.Y - GridLocation.Y) / float(TileSize);
+  const float col = (WorldLocation.X - GridLocation.X) / float(TileSize);
 
-  return FGridPosition(row, col);
+  return FGridPosition(round(row), round(col));
 }
 
 ATile *AGrid::GetTileByLocation(const FVector WorldLocation) const {
@@ -129,7 +129,8 @@ bool AGrid::IsCrossRoad(const ATile *Tile,
   }
 
   // right
-  if (AdjacentTiles.Right && AdjacentTiles.Right->TileType == ETileType::Floor) {
+  if (AdjacentTiles.Right &&
+      AdjacentTiles.Right->TileType == ETileType::Floor) {
     TilesIsNotWall += 1;
   }
 
@@ -142,7 +143,6 @@ bool AGrid::IsCrossRoad(const ATile *Tile,
   if (AdjacentTiles.Down && AdjacentTiles.Down->TileType == ETileType::Floor) {
     TilesIsNotWall += 1;
   }
-  
 
   // There is 2 floor tiles
   // =============
@@ -159,34 +159,34 @@ bool AGrid::IsCrossRoad(const ATile *Tile,
 UFUNCTION(BlueprintCallable)
 FAdjacentTiles AGrid::GetAdjacentTiles(const ATile *Tile) const {
   FGridPosition GridPosition = Tile->GetGridPosition();
-  
+
   FAdjacentTiles AdjacentTiles;
 
   FGridPosition UpPosition =
       FGridPosition(GridPosition.row + 1, GridPosition.col);
   auto *UpTile = GridTilesIndex.Find(UpPosition);
-  if(UpTile) {
+  if (UpTile) {
     AdjacentTiles.Up = *UpTile;
   }
 
   FGridPosition RightPosition =
       FGridPosition(GridPosition.row, GridPosition.col + 1);
   auto *RightTile = GridTilesIndex.Find(RightPosition);
-  if(RightTile) {
+  if (RightTile) {
     AdjacentTiles.Right = *RightTile;
   }
 
   FGridPosition LeftPosition =
       FGridPosition(GridPosition.row, GridPosition.col - 1);
   auto *LeftTile = GridTilesIndex.Find(LeftPosition);
-  if(LeftTile) {
+  if (LeftTile) {
     AdjacentTiles.Left = *LeftTile;
   }
 
   FGridPosition DownPosition =
       FGridPosition(GridPosition.row - 1, GridPosition.col);
   auto *DownTile = GridTilesIndex.Find(DownPosition);
-  if(DownTile) {
+  if (DownTile) {
     AdjacentTiles.Down = *DownTile;
   }
 

@@ -50,8 +50,8 @@ bool AGhostController::MoveToTile(ATile *GoalTile) {
   // If goal tile is wall, find adjacent floor tile
   ATile *Goal = GoalTile;
   if (Goal->GetTileType() == ETileType::Wall) {
-    TArray<ATile * > AdjacentTiles = Grid->GetAdjacentTiles(GoalTile).ToArray();
-    for (ATile * Tile : AdjacentTiles) {
+    TArray<ATile *> AdjacentTiles = Grid->GetAdjacentTiles(GoalTile).ToArray();
+    for (ATile *Tile : AdjacentTiles) {
       if (Tile && Tile->GetTileType() == ETileType::Floor) {
         Goal = Tile;
         break;
@@ -174,6 +174,7 @@ void AGhostController::FindPathForMoveRequest(
 
   if (PathResult.IsSuccessful() && PathResult.Path.IsValid()) {
     OutPath = PathResult.Path;
+    CurrentPath = PathResult.Path;
     return;
   }
 
@@ -183,6 +184,8 @@ void AGhostController::FindPathForMoveRequest(
              ? *GetNameSafe(MoveRequest.GetGoalActor())
              : *MoveRequest.GetGoalLocation().ToString());
 }
+
+FNavPathSharedPtr AGhostController::GetCurrentPath() { return CurrentPath; }
 
 void AGhostController::Tick(float DeltaTime) {}
 

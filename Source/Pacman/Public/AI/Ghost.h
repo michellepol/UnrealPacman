@@ -44,6 +44,8 @@ public:
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
   EGhostType GhostType;
 
+  UCapsuleComponent *CapsuleComponent = nullptr;
+
 private:
   ANavModifierVolume *NavModifierVolume = nullptr;
 };
