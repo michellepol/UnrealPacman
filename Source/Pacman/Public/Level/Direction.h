@@ -3,7 +3,7 @@
 #include "UObject/ObjectMacros.h"
 
 UENUM(BlueprintType)
-enum class EDirection : uint8 {
+enum class EPacmanDirection : uint8 {
   kUp UMETA(DisplayName = "Up"),
   kLeft UMETA(DisplayName = "Left"),
   kRight UMETA(DisplayName = "Right"),

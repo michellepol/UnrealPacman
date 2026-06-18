@@ -18,6 +18,12 @@ class PACMAN_API APacmanGameState : public AGameStateBase {
 public:
   APacmanGameState();
 
+protected:
+  virtual void BeginPlay() override;
+
+  void CacheLevelReferences();
+
+public:
   AGrid *GetGrid();
 
   AGhost *GetGhost(EGhostType GhostType);

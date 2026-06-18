@@ -1,1 +1,176 @@
-/opt/unreal-engine/compile_commands.json
+[
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/UnrealEditor/Inc/Pacman/UHT/BasePickupActor.gen.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Module.Pacman.gen.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Module.Pacman.gen.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PerModuleInline.gen.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PerModuleInline.gen.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PerModuleInline.gen.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Pacman.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Pacman.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Pacman.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/Ghost.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Ghost.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Ghost.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/GhostController.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/GhostController.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/GhostController.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/Tasks/BlueGhost/BlueChaseTask.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/BlueChaseTask.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/BlueChaseTask.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/Tasks/Common.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Common.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Common.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/Tasks/FrightenedTask.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/FrightenedTask.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/FrightenedTask.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/Tasks/PinkGhost/PinkChaseTask.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PinkChaseTask.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PinkChaseTask.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/Tasks/PinkGhost/ScatterTask.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/ScatterTask.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/ScatterTask.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/AI/Tasks/RedGhost/RedChaseTask.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/RedChaseTask.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/RedChaseTask.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Level/Grid.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Grid.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Grid.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Level/GridPosition.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/GridPosition.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/GridPosition.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Level/PathFinding.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PathFinding.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PathFinding.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Level/PathFindingTest.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PathFindingTest.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PathFindingTest.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Level/Tile.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Tile.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Tile.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanCharacter.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PacmanCharacter.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PacmanCharacter.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanGameMode.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PacmanGameMode.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PacmanGameMode.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanGameState.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PacmanGameState.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PacmanGameState.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanHUD.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PacmanHUD.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PacmanHUD.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanPlayer.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PacmanPlayer.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PacmanPlayer.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/PacmanPlayerController.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PacmanPlayerController.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PacmanPlayerController.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Pickup/BasePickupActor.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/BasePickupActor.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/BasePickupActor.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Pickup/PowerUpPickupActor.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PowerUpPickupActor.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/PowerUpPickupActor.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Pickup/ScorePickupActor.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/ScorePickupActor.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/ScorePickupActor.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Utils/Math.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Math.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Math.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Utils/MathTest.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/MathTest.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/MathTest.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Utils/Matrix.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Matrix.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/Matrix.cpp.o"
+	},
+	{
+		"file": "/home/michelle/documents/Unreal Projects/Pacman/Source/Pacman/Private/Utils/MatrixTest.cpp",
+		"command": "/opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++ @\"/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/MatrixTest.cpp.o.rsp\" -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/lib/clang/20/include -isystem /opt/unreal-engine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v26_clang-20.1.8-rockylinux8/x86_64-unknown-linux-gnu/usr/include",
+		"directory": "/opt/unreal-engine/Engine/Source",
+		"output": "/home/michelle/documents/Unreal Projects/Pacman/Intermediate/Build/Linux/x64/UnrealEditor/Development/Pacman/MatrixTest.cpp.o"
+	}
+]

@@ -64,6 +64,8 @@ public:
   UFUNCTION(BlueprintCallable)
   FAdjacentTiles GetAdjacentTiles(const ATile *Tile) const;
 
+  ATile *GetScatterPoint(EGhostType GhostType) const;
+
   TArray<TArray<int>> ToIntGrid();
 
   const TArray<TArray<int>> &GetIntGrid() const;

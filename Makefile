@@ -2,25 +2,43 @@
 # *DO NOT EDIT*
 
 UNREALROOTPATH = /opt/unreal-engine
-GAMEPROJECTFILE =/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject
 
 TARGETS = \
+	Pacman-Android-DebugGame  \
+	Pacman-Android-Development  \
+	Pacman-Android-Shipping  \
 	Pacman-Linux-DebugGame  \
+	Pacman-Linux-Development  \
 	Pacman-Linux-Shipping  \
+	Pacman-LinuxArm64-DebugGame  \
+	Pacman-LinuxArm64-Development  \
+	Pacman-LinuxArm64-Shipping  \
 	Pacman \
 	PacmanEditor-Linux-DebugGame  \
-	PacmanEditor-Linux-Shipping  \
+	PacmanEditor-Linux-Development  \
 	PacmanEditor \
+	LiveLinkHub-Linux-DebugGame  \
+	LiveLinkHub-Linux-Development  \
+	LiveLinkHub \
+	DotNetPerforceLib \
+	IoStoreOnDemandTests \
+	EventLoopUnitTests \
 	UnrealEditor-Linux-DebugGame  \
-	UnrealEditor-Linux-Shipping  \
+	UnrealEditor-Linux-Development  \
 	UnrealEditor \
+	UnrealGame-Android-DebugGame  \
+	UnrealGame-Android-Development  \
+	UnrealGame-Android-Shipping  \
 	UnrealGame-Linux-DebugGame  \
+	UnrealGame-Linux-Development  \
 	UnrealGame-Linux-Shipping  \
+	UnrealGame-LinuxArm64-DebugGame  \
+	UnrealGame-LinuxArm64-Development  \
+	UnrealGame-LinuxArm64-Shipping  \
 	UnrealGame\
 	configure
 
-BUILD = bash "$(UNREALROOTPATH)/Engine/Build/BatchFiles/Linux/Build.sh"
-PROJECTBUILD = "$(UNREALROOTPATH)/Engine/Binaries/ThirdParty/DotNet/6.0.302/linux/dotnet" "$(UNREALROOTPATH)/Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll"
+BUILD = "$(UNREALROOTPATH)/Engine/Build/BatchFiles/RunUBT.sh"
 
 all: StandardSet
 
@@ -31,44 +49,95 @@ StandardSet: RequiredTools UnrealFrontend PacmanEditor UnrealInsights
 DebugSet: RequiredTools UnrealFrontend-Linux-Debug PacmanEditor-Linux-Debug
 
 
+Pacman-Android-DebugGame:
+	 $(BUILD) Pacman Android DebugGame  -Project="/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject" $(ARGS)
+
+Pacman-Android-Development:
+	 $(BUILD) Pacman Android Development  -Project="/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject" $(ARGS)
+
+Pacman-Android-Shipping:
+	 $(BUILD) Pacman Android Shipping  -Project="/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject" $(ARGS)
+
 Pacman-Linux-DebugGame:
-	 $(PROJECTBUILD) Pacman Linux DebugGame  -project="$(GAMEPROJECTFILE)" $(ARGS)
+	 $(BUILD) Pacman Linux DebugGame  -Project="/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject" $(ARGS)
+
+Pacman-Linux-Development:
+	 $(BUILD) Pacman Linux Development  -Project="/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject" $(ARGS)
 
 Pacman-Linux-Shipping:
-	 $(PROJECTBUILD) Pacman Linux Shipping  -project="$(GAMEPROJECTFILE)" $(ARGS)
+	 $(BUILD) Pacman Linux Shipping  -Project="/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject" $(ARGS)
 
-Pacman:
-	 $(PROJECTBUILD) Pacman Linux Development  -project="$(GAMEPROJECTFILE)" $(ARGS)
+Pacman-LinuxArm64-DebugGame:
+	 $(BUILD) Pacman LinuxArm64 DebugGame  -Project="/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject" $(ARGS)
+
+Pacman-LinuxArm64-Development:
+	 $(BUILD) Pacman LinuxArm64 Development  -Project="/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject" $(ARGS)
+
+Pacman-LinuxArm64-Shipping:
+	 $(BUILD) Pacman LinuxArm64 Shipping  -Project="/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject" $(ARGS)
+
+Pacman: Pacman-Linux-Development
 
 PacmanEditor-Linux-DebugGame:
-	 $(PROJECTBUILD) PacmanEditor Linux DebugGame  -project="$(GAMEPROJECTFILE)" $(ARGS)
+	 $(BUILD) PacmanEditor Linux DebugGame  -Project="/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject" $(ARGS)
 
-PacmanEditor-Linux-Shipping:
-	 $(PROJECTBUILD) PacmanEditor Linux Shipping  -project="$(GAMEPROJECTFILE)" $(ARGS)
+PacmanEditor-Linux-Development:
+	 $(BUILD) PacmanEditor Linux Development  -Project="/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject" $(ARGS)
 
-PacmanEditor:
-	 $(PROJECTBUILD) PacmanEditor Linux Development  -project="$(GAMEPROJECTFILE)" $(ARGS)
+PacmanEditor: PacmanEditor-Linux-Development
+
+LiveLinkHub-Linux-DebugGame:
+	 $(BUILD) LiveLinkHub Linux DebugGame  $(ARGS)
+
+LiveLinkHub-Linux-Development:
+	 $(BUILD) LiveLinkHub Linux Development  $(ARGS)
+
+LiveLinkHub: LiveLinkHub-Linux-Development
+
+DotNetPerforceLib: DotNetPerforceLib-Linux-Development
+
+IoStoreOnDemandTests: IoStoreOnDemandTests-Linux-Development
+
+EventLoopUnitTests: EventLoopUnitTests-Linux-Development
 
 UnrealEditor-Linux-DebugGame:
-	 $(BUILD) UnrealEditor Linux DebugGame  -project="$(GAMEPROJECTFILE)" $(ARGS)
+	 $(BUILD) UnrealEditor Linux DebugGame  $(ARGS)
 
-UnrealEditor-Linux-Shipping:
-	 $(BUILD) UnrealEditor Linux Shipping  -project="$(GAMEPROJECTFILE)" $(ARGS)
+UnrealEditor-Linux-Development:
+	 $(BUILD) UnrealEditor Linux Development  $(ARGS)
 
-UnrealEditor:
-	 $(BUILD) UnrealEditor Linux Development  -project="$(GAMEPROJECTFILE)" $(ARGS)
+UnrealEditor: UnrealEditor-Linux-Development
+
+UnrealGame-Android-DebugGame:
+	 $(BUILD) UnrealGame Android DebugGame  $(ARGS)
+
+UnrealGame-Android-Development:
+	 $(BUILD) UnrealGame Android Development  $(ARGS)
+
+UnrealGame-Android-Shipping:
+	 $(BUILD) UnrealGame Android Shipping  $(ARGS)
 
 UnrealGame-Linux-DebugGame:
-	 $(BUILD) UnrealGame Linux DebugGame  -project="$(GAMEPROJECTFILE)" $(ARGS)
+	 $(BUILD) UnrealGame Linux DebugGame  $(ARGS)
+
+UnrealGame-Linux-Development:
+	 $(BUILD) UnrealGame Linux Development  $(ARGS)
 
 UnrealGame-Linux-Shipping:
-	 $(BUILD) UnrealGame Linux Shipping  -project="$(GAMEPROJECTFILE)" $(ARGS)
+	 $(BUILD) UnrealGame Linux Shipping  $(ARGS)
 
-UnrealGame:
-	 $(BUILD) UnrealGame Linux Development  -project="$(GAMEPROJECTFILE)" $(ARGS)
+UnrealGame-LinuxArm64-DebugGame:
+	 $(BUILD) UnrealGame LinuxArm64 DebugGame  $(ARGS)
+
+UnrealGame-LinuxArm64-Development:
+	 $(BUILD) UnrealGame LinuxArm64 Development  $(ARGS)
+
+UnrealGame-LinuxArm64-Shipping:
+	 $(BUILD) UnrealGame LinuxArm64 Shipping  $(ARGS)
+
+UnrealGame: UnrealGame-Linux-Development
 
 configure:
-	xbuild /property:Configuration=Development /verbosity:quiet /nologo "$(UNREALROOTPATH)/Engine/Source/Programs/UnrealBuildTool/UnrealBuildTool.csproj"
-	$(PROJECTBUILD) -projectfiles -project="\"$(GAMEPROJECTFILE)\"" -game -engine 
+	$(BUILD) -ProjectFiles -Project="/home/michelle/documents/Unreal Projects/Pacman/Pacman.uproject" -Game 
 
 .PHONY: $(TARGETS)

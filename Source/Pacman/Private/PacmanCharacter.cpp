@@ -9,7 +9,7 @@ void APacmanCharacter::BeginPlay() { Super::BeginPlay(); }
 
 void APacmanCharacter::Tick(float DeltaTime) { Super::Tick(DeltaTime); }
 
-EDirection APacmanCharacter::GetDirection() const {
+EPacmanDirection APacmanCharacter::GetDirection() const {
   // Correctly define directional vectors for Unreal's coordinate system
   const static FVector UpDirection =
       FVector{0.0f, 1.0f, 0.0f}; // +Y is forward/up
@@ -22,7 +22,7 @@ EDirection APacmanCharacter::GetDirection() const {
   FVector Velocity = GetVelocity();
 
   if (Velocity.SizeSquared() < KINDA_SMALL_NUMBER) {
-    return EDirection::kUndefined;
+    return EPacmanDirection::kUndefined;
   }
 
   Velocity.Normalize();
@@ -31,14 +31,14 @@ EDirection APacmanCharacter::GetDirection() const {
   const float DirectionThreshold = 0.7f; // Cos(45 degrees) ≈ 0.7
 
   if (IsSameDirection(UpDirection, Velocity, DirectionThreshold)) {
-    return EDirection::kUp;
+    return EPacmanDirection::kUp;
   } else if (IsSameDirection(DownDirection, Velocity, DirectionThreshold)) {
-    return EDirection::kDown;
+    return EPacmanDirection::kDown;
   } else if (IsSameDirection(RightDirection, Velocity, DirectionThreshold)) {
-    return EDirection::kRight;
+    return EPacmanDirection::kRight;
   } else if (IsSameDirection(LeftDirection, Velocity, DirectionThreshold)) {
-    return EDirection::kLeft;
+    return EPacmanDirection::kLeft;
   } else {
-    return EDirection::kUndefined;
+    return EPacmanDirection::kUndefined;
   }
 }

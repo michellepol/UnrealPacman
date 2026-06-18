@@ -15,7 +15,7 @@ public:
   APacmanCharacter();
 
   ///@brief Calculate direction of character in world
-  EDirection GetDirection() const;
+  EPacmanDirection GetDirection() const;
 
 protected:
   virtual void BeginPlay() override;

@@ -59,14 +59,26 @@ FGridPosition ATile::GetGridPosition() const { return GridPosition; }
 ETileType ATile::GetTileType() const { return TileType; }
 
 void ATile::SetStaticMeshByTileType() {
+  if (!StaticMeshComponent) {
+    return;
+  }
+
   switch (TileType) {
   case ETileType::Wall:
-    StaticMeshComponent->SetStaticMesh(WallMesh);
-    StaticMeshComponent->SetMaterial(0, WallMaterial);
+    if (WallMesh) {
+      StaticMeshComponent->SetStaticMesh(WallMesh);
+    }
+    if (WallMaterial) {
+      StaticMeshComponent->SetMaterial(0, WallMaterial);
+    }
     break;
   case ETileType::Floor:
-    StaticMeshComponent->SetStaticMesh(FloorMesh);
-    StaticMeshComponent->SetMaterial(0, FloorMaterial);
+    if (FloorMesh) {
+      StaticMeshComponent->SetStaticMesh(FloorMesh);
+    }
+    if (FloorMaterial) {
+      StaticMeshComponent->SetMaterial(0, FloorMaterial);
+    }
     break;
   }
 }

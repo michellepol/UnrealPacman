@@ -6,16 +6,21 @@
 
 DEFINE_LOG_CATEGORY(LogPacmanGameState);
 
-APacmanGameState::APacmanGameState() {
-  if (!GetWorld()) {
+APacmanGameState::APacmanGameState() = default;
+
+void APacmanGameState::BeginPlay() {
+  Super::BeginPlay();
+  CacheLevelReferences();
+}
+
+void APacmanGameState::CacheLevelReferences() {
+  UWorld *World = GetWorld();
+  if (!World) {
     UE_LOG(LogPacmanGameState, Error, TEXT("No world for game state"));
     return;
   }
 
-  UWorld *World = GetWorld();
-
   TArray<AActor *> FoundGrids;
-
   UGameplayStatics::GetAllActorsOfClass(World, AGrid::StaticClass(),
                                         FoundGrids);
 

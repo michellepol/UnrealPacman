@@ -9,6 +9,7 @@
 #include "UObject/ObjectMacros.h"
 
 #include "Level/Tile.h"
+#include "Utils/GridUtils.h"
 
 DEFINE_LOG_CATEGORY(LogGrid);
 
@@ -227,6 +228,33 @@ TArray<TArray<int>> AGrid::ToIntGrid() {
   }
 
   return result;
+}
+
+ATile *AGrid::GetScatterPoint(EGhostType GhostType) const {
+  FGridPosition Corner;
+
+  switch (GhostType) {
+  case EGhostType::kRed:
+    Corner = FGridPosition{Width - 1, Length - 1};
+    break;
+  case EGhostType::kPink:
+    Corner = FGridPosition{Width - 1, 0};
+    break;
+  case EGhostType::kBlue:
+    Corner = FGridPosition{0, Length - 1};
+    break;
+  case EGhostType::kYellow:
+    Corner = FGridPosition{0, 0};
+    break;
+  default:
+    return nullptr;
+  }
+
+  return FindNearestTile(
+      GridTilesIndex, Corner, Width, Length,
+      [](const ATile *Tile) {
+        return Tile && Tile->TileType == ETileType::Floor;
+      });
 }
 
 const TArray<TArray<int>> &AGrid::GetIntGrid() const { return GridInt; }
