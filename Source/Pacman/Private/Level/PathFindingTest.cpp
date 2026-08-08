@@ -83,5 +83,18 @@ bool AStarTest::RunTest(const FString &Parameters) {
     TestTrue("Maze", !path.IsEmpty()); // Ожидаем, что путь найден
   }
 
-   return 0;
+  {
+    TArray<TArray<int>> open_grid = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+    const FGridPosition start = FGridPosition(1, 1);
+    const FGridPosition goal = FGridPosition(1, 2);
+    const FGridPosition forbidden_first_step = FGridPosition(1, 2);
+    const auto path = AStar(open_grid, start, goal, &forbidden_first_step);
+
+    TestTrue("Path avoids forbidden first step", path.Num() > 1);
+    if (path.Num() > 1) {
+      TestTrue("First step is not reverse", path[1] != forbidden_first_step);
+    }
+  }
+
+  return 0;
 }

@@ -23,7 +23,8 @@ const std::vector<std::vector<int>> kDirection = {
 
 bool DetectCollision(const int row, const int col,
                      const TArray<TArray<int>> &grid) {
-  if (col < 0 || col >= grid[0].Num() || row < 0 || row >= grid.Num() ||
+  if (grid.IsEmpty() || grid[0].IsEmpty() || col < 0 ||
+      col >= grid[0].Num() || row < 0 || row >= grid.Num() ||
       grid[row][col] == 1) {
     return true;
   }
@@ -64,10 +65,17 @@ GetNeigbours(Node *current,
 
 TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
                             const FGridPosition start_pos,
-                            const FGridPosition goal_pos) {
+                            const FGridPosition goal_pos,
+                            const FGridPosition *ForbiddenFirstStep) {
   static const int kDefaultCost = 1;
 
-  static std::unordered_map<FGridPosition, Node, GridPositionHash> nodes;
+  if (DetectCollision(start_pos.row, start_pos.col, grid) ||
+      DetectCollision(goal_pos.row, goal_pos.col, grid)) {
+    return {};
+  }
+
+  std::unordered_map<FGridPosition, Node, GridPositionHash> nodes;
+  nodes.reserve(static_cast<size_t>(grid.Num() * grid[0].Num()));
 
   std::priority_queue<Node *, std::vector<Node *>, NodeCompare> frontier;
 
@@ -78,6 +86,7 @@ TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
       nodes.emplace(goal_pos, Node(goal_pos.row, goal_pos.col)).first->second;
   frontier.push(&start);
 
+  bool bReachedGoal = false;
   while (!frontier.empty()) {
     Node *current = frontier.top();
     frontier.pop();
@@ -88,12 +97,22 @@ TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
     }
 
     if (*current == goal) {
+      bReachedGoal = true;
       break;
     }
 
     auto neighbors = GetNeigbours(current, nodes, grid);
 
     for (auto *next : neighbors) {
+      // A ghost may not immediately turn back onto the tile it just left.
+      // The controller passes this only for the first expansion; subsequent
+      // nodes remain unrestricted so the path can still reach its target.
+      if (*current == start && ForbiddenFirstStep &&
+          next->row == ForbiddenFirstStep->row &&
+          next->col == ForbiddenFirstStep->col) {
+        continue;
+      }
+
       int new_cost = current->g + kDefaultCost;
 
       if (next->g == 0 || new_cost < next->g) {
@@ -104,6 +123,10 @@ TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
         next->parent = current;
       }
     }
+  }
+
+  if (!bReachedGoal) {
+    return {};
   }
 
   TArray<FGridPosition> path;
@@ -126,8 +149,6 @@ TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
     current = current->parent;
   }
   Algo::Reverse(path);
-
-  nodes.clear();
 
   return path;
 }

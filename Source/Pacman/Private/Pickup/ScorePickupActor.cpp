@@ -18,6 +18,10 @@ void AScorePickupActor::ApplyAction(AActor *OtherActor) {
   }
 
   APlayerState *PlayerState = Character->GetPlayerState();
+  if (!PlayerState) {
+    UE_LOG(LogTemp, Warning, TEXT("PlayerState is not ready"));
+    return;
+  }
 
   PlayerState->SetScore(PlayerState->GetScore() + ScoreBonus);
 }

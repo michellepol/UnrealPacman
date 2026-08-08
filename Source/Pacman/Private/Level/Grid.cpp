@@ -159,6 +159,11 @@ bool AGrid::IsCrossRoad(const ATile *Tile,
 
 UFUNCTION(BlueprintCallable)
 FAdjacentTiles AGrid::GetAdjacentTiles(const ATile *Tile) const {
+  if (!Tile) {
+    UE_LOG(LogGrid, Error, TEXT("Cannot get adjacent tiles for a null tile"));
+    return {};
+  }
+
   FGridPosition GridPosition = Tile->GetGridPosition();
 
   FAdjacentTiles AdjacentTiles;
@@ -217,6 +222,11 @@ TArray<TArray<int>> AGrid::ToIntGrid() {
       }
 
       ATile *Tile = *IndexValue;
+
+      if (!Tile) {
+        UE_LOG(LogGrid, Error, TEXT("Null tile in index"));
+        continue;
+      }
 
       if (Tile->TileType == ETileType::Wall) {
         int_row[col] = 1;
@@ -287,13 +297,20 @@ void AGrid::OnEditorPlaced(UObject *Object, const TArray<AActor *> &Actors) {
       size_t x = col * TileSize;
 
       FTransform SpawnTransform;
-      SpawnTransform.SetLocation(FVector{x, y, 0});
+      SpawnTransform.SetLocation(
+          FVector(static_cast<double>(x), static_cast<double>(y), 0.0));
 
       FActorSpawnParameters SpawnParams;
       SpawnParams.Owner = this;
 
       auto *SpawnedTile = GetWorld()->SpawnActor<AActor>(
           TileBP->GeneratedClass, SpawnTransform, SpawnParams);
+
+      if (!SpawnedTile) {
+        UE_LOG(LogGrid, Error, TEXT("Failed to spawn tile at row %i, col %i"),
+               row, col);
+        continue;
+      }
 
       const FAttachmentTransformRules AttachmentRules(
           EAttachmentRule::KeepWorld, false);

@@ -3,6 +3,8 @@
 #include "AI/GhostController.h"
 
 #include "AIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "BehaviorTree/BlackboardData.h"
 #include "Engine/World.h"
 #include "NavigationData.h"
 #include "NavigationSystem.h"
@@ -16,6 +18,15 @@
 DEFINE_LOG_CATEGORY(LogGhostController);
 
 AGhostController::AGhostController() {}
+
+void AGhostController::BeginPlay() {
+  Super::BeginPlay();
+
+  if (APacmanGameState *GameState =
+          Cast<APacmanGameState>(GetWorld()->GetGameState())) {
+    GameState->RegisterGhostController(this);
+  }
+}
 
 AGrid *AGhostController::GetGrid() const {
   if (GetWorld() == nullptr) {
@@ -59,7 +70,13 @@ bool AGhostController::MoveToTile(ATile *GoalTile) {
     }
   }
 
-  FVector GhostLocation = GetPawn()->GetActorLocation();
+  APawn *ControlledPawn = GetPawn();
+  if (!ControlledPawn) {
+    UE_LOG(LogGhostController, Error, TEXT("Controller has no pawn"));
+    return false;
+  }
+
+  FVector GhostLocation = ControlledPawn->GetActorLocation();
 
   ATile *GhostTile = Grid->GetTileByLocation(GhostLocation);
 
@@ -102,7 +119,13 @@ void AGhostController::FrigthenedMove() {
     return;
   }
 
-  FVector GhostLocation = GetPawn()->GetActorLocation();
+  APawn *ControlledPawn = GetPawn();
+  if (!ControlledPawn) {
+    UE_LOG(LogGhostController, Error, TEXT("Controller has no pawn"));
+    return;
+  }
+
+  FVector GhostLocation = ControlledPawn->GetActorLocation();
 
   ATile *GhostTile = Grid->GetTileByLocation(GhostLocation);
 
@@ -124,7 +147,7 @@ void AGhostController::FrigthenedMove() {
 
     // RotateGhostToNewDirection();
   } else {
-    FVector ForwardVector = GetPawn()->GetActorForwardVector();
+    FVector ForwardVector = ControlledPawn->GetActorForwardVector();
     MoveInDirection(ForwardVector);
   }
 }
@@ -152,7 +175,13 @@ void AGhostController::FindPathForMoveRequest(
     return;
   }
 
-  FVector GhostLocation = GetPawn()->GetActorLocation();
+  APawn *ControlledPawn = GetPawn();
+  if (!ControlledPawn) {
+    UE_LOG(LogGhostController, Error, TEXT("Controller has no pawn"));
+    return;
+  }
+
+  FVector GhostLocation = ControlledPawn->GetActorLocation();
 
   ATile *StartTile = Grid->GetTileByLocation(GhostLocation);
 
@@ -170,11 +199,52 @@ void AGhostController::FindPathForMoveRequest(
     return;
   }
 
-  FPathFindingResult PathResult = FindPath(StartTile, GoalTile, Grid);
+  const FGridPosition StartPosition = StartTile->GetGridPosition();
+  FPathFindingResult PathResult;
+
+  const bool bMustNotReverse =
+      bHasLastPathDirection && !bAllowReverseOnNextPath;
+  if (bMustNotReverse) {
+    const FGridPosition ReverseTile = {
+        StartPosition.row - LastPathDirection.row,
+        StartPosition.col - LastPathDirection.col};
+    TArray<FGridPosition> Path =
+        AStar(Grid->GetIntGrid(), StartPosition, GoalTile->GetGridPosition(),
+              &ReverseTile);
+
+    if (Path.Num() > 1) {
+      TArray<FVector3d> Points;
+      for (const FGridPosition &Position : Path) {
+        if (ATile *Tile = Grid->GetTileByGridPosition(Position)) {
+          Points.Push(Tile->GetActorLocation());
+        }
+      }
+      PathResult.Result = Points.Num() > 1 ? ENavigationQueryResult::Success
+                                            : ENavigationQueryResult::Fail;
+      PathResult.Path = MakeShared<FNavigationPath>(FNavigationPath(Points));
+    }
+  }
+
+  if (!bMustNotReverse &&
+      (!PathResult.IsSuccessful() || !PathResult.Path.IsValid())) {
+    PathResult = FindPath(StartTile, GoalTile, Grid);
+  }
+
+  bAllowReverseOnNextPath = false;
 
   if (PathResult.IsSuccessful() && PathResult.Path.IsValid()) {
     OutPath = PathResult.Path;
     CurrentPath = PathResult.Path;
+
+    const TArray<FNavPathPoint> &Points = CurrentPath->GetPathPoints();
+    if (Points.Num() > 1) {
+      if (ATile *NextTile = Grid->GetTileByLocation(Points[1].Location)) {
+        const FGridPosition NextPosition = NextTile->GetGridPosition();
+        LastPathDirection = {NextPosition.row - StartPosition.row,
+                             NextPosition.col - StartPosition.col};
+        bHasLastPathDirection = true;
+      }
+    }
     return;
   }
 
@@ -187,8 +257,58 @@ void AGhostController::FindPathForMoveRequest(
 
 FNavPathSharedPtr AGhostController::GetCurrentPath() { return CurrentPath; }
 
-void AGhostController::Tick(float DeltaTime) {}
+bool AGhostController::SetGhostMode(EGhostMode NewMode) {
+  static const FName GhostModeKey(TEXT("GhostMode"));
+  UBlackboardComponent *BlackboardComponent = GetBlackboardComponent();
+  if (!BlackboardComponent) {
+    UE_LOG(LogGhostController, Warning,
+           TEXT("Ghost controller %s has no Blackboard component"), *GetName());
+    return false;
+  }
+
+  if (BlackboardComponent->GetKeyID(GhostModeKey) == FBlackboard::InvalidKey) {
+    UE_LOG(LogGhostController, Warning,
+           TEXT("Blackboard for %s must define enum key GhostMode"), *GetName());
+    return false;
+  }
+
+  BlackboardComponent->SetValueAsEnum(GhostModeKey, static_cast<uint8>(NewMode));
+  LastPublishedGhostMode = static_cast<uint8>(NewMode);
+  return true;
+}
+
+void AGhostController::ReverseDirection() {
+  StopMovement();
+  bAllowReverseOnNextPath = true;
+  bHasLastPathDirection = false;
+
+  if (APawn *ControlledPawn = GetPawn()) {
+    FRotator Rotation = ControlledPawn->GetActorRotation();
+    Rotation.Yaw = FRotator::NormalizeAxis(Rotation.Yaw + 180.f);
+    ControlledPawn->SetActorRotation(Rotation);
+  }
+
+  LastGoalLocation = FGridPosition();
+  LastGhostLocation = FGridPosition();
+}
+
+void AGhostController::Tick(float DeltaTime) {
+  Super::Tick(DeltaTime);
+
+  APacmanGameState *GameState =
+      GetWorld() ? Cast<APacmanGameState>(GetWorld()->GetGameState()) : nullptr;
+  if (!GameState) {
+    return;
+  }
+
+  const uint8 CurrentMode = static_cast<uint8>(GameState->GetGhostMode());
+  if (LastPublishedGhostMode != CurrentMode) {
+    SetGhostMode(GameState->GetGhostMode());
+  }
+}
 
 void AGhostController::MoveInDirection(FVector Direction, float Scale) {
-  GetPawn()->AddMovementInput(Direction, Scale);
+  if (APawn *ControlledPawn = GetPawn()) {
+    ControlledPawn->AddMovementInput(Direction, Scale);
+  }
 }

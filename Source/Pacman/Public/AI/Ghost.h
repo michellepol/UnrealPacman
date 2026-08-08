@@ -20,6 +20,15 @@ enum class EGhostType : uint8 {
   kYellow UMETA(DisplayName = "Yellow")
 };
 
+/** The globally scheduled behaviour shared by every ghost. */
+UENUM(BlueprintType)
+enum class EGhostMode : uint8 {
+  Scatter UMETA(DisplayName = "Scatter"),
+  Chase UMETA(DisplayName = "Chase"),
+  Frightened UMETA(DisplayName = "Frightened"),
+  Eaten UMETA(DisplayName = "Eaten")
+};
+
 UCLASS()
 class PACMAN_API AGhost : public APacmanCharacter {
   GENERATED_BODY()

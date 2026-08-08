@@ -2,6 +2,7 @@
 
 #include "AI/Ghost.h"
 
+#include "Components/SceneComponent.h"
 #include "NavModifierVolume.h"
 #include "NavigationSystem.h"
 
@@ -10,26 +11,10 @@ AGhost::AGhost() { PrimaryActorTick.bCanEverTick = true; }
 void AGhost::BeginPlay() {
   Super::BeginPlay();
 
-  const static FVector Extent = FVector(100.0f, 100.0f, 100.0f);
-
-  if (NavModifierVolumeClass && NavAreaClass) {
-    UE_LOG(LogTemp, Display, TEXT("Spawn Navigation Volume"));
-
-    NavModifierVolume = GetWorld()->SpawnActor<ANavModifierVolume>(
-        NavModifierVolumeClass, GetActorLocation(), FRotator::ZeroRotator);
-
-    if (NavModifierVolume) {
-      NavModifierVolume->SetActorRelativeScale3D(Extent);
-      NavModifierVolume->SetAreaClass(NavAreaClass);
-
-      FAttachmentTransformRules AttachmentRules(
-          EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget,
-          EAttachmentRule::KeepWorld, false);
-
-      NavModifierVolume->AttachToActor(this, AttachmentRules);
-      NavModifierVolume->SetLockLocation(false);
-    }
-  }
+  // ANavModifierVolume needs authored brush geometry to provide valid nav
+  // bounds. Spawning it at runtime creates an empty volume in UE 5.8 (and the
+  // navigation system reports it as invalid). Ghost movement uses the custom
+  // grid pathfinder, so no runtime navigation volume is required here.
 }
 
 void AGhost::Tick(float DeltaTime) {

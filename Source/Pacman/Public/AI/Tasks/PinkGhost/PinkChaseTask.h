@@ -19,7 +19,7 @@ class PACMAN_API UAITask_PinkChase : public UBTTaskNode {
 public:
   UAITask_PinkChase();
 
-  const static uint kTilesAheadPacman = 3;
+  const static int32 kTilesAheadPacman = 3;
 
 protected:
   virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp,

@@ -49,4 +49,5 @@ FPathFindingResult FindPath(ATile *Start, ATile *Goal, AGrid *Grid);
 
 TArray<FGridPosition> AStar(const TArray<TArray<int>> &grid,
                             const FGridPosition start_pos,
-                            const FGridPosition goal_pos);
+                            const FGridPosition goal_pos,
+                            const FGridPosition *ForbiddenFirstStep = nullptr);

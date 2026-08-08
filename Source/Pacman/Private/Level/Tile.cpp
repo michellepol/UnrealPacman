@@ -84,7 +84,8 @@ void ATile::SetStaticMeshByTileType() {
 }
 
 void ATile::SpawnPickup() {
-  if (!ScorePickupBP || !PowerUpPickupBP) {
+  if (!ScorePickupBP || !PowerUpPickupBP || !ScorePickupBP->GeneratedClass ||
+      !PowerUpPickupBP->GeneratedClass) {
     UE_LOG(LogTile, Error,
            TEXT("ScorePickupBP or PowerUpPickupBP is not defined"));
     return;

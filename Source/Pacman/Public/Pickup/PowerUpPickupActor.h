@@ -17,6 +17,9 @@ public:
   UPROPERTY(EditAnywhere)
   float ScoreBonus = 50.0f;
 
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power Up", meta = (ClampMin = "0.0"))
+  float FrightenedDuration = 6.0f;
+
 protected:
   // Called when the game starts or when spawned
   virtual void BeginPlay() override;

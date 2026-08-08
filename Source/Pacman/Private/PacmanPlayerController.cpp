@@ -2,4 +2,6 @@
 
 #include "PacmanPlayerController.h"
 
-void APacmanPlayerController::SetupInputComponent() {}
+void APacmanPlayerController::SetupInputComponent() {
+  Super::SetupInputComponent();
+}

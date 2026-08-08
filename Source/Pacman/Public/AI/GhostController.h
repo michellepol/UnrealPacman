@@ -20,6 +20,8 @@ class PACMAN_API AGhostController : public AAIController {
 public:
   AGhostController();
 
+  virtual void BeginPlay() override;
+
   bool MoveToTile(ATile *Tile);
 
   void FrigthenedMove();
@@ -35,10 +37,24 @@ public:
 
   FNavPathSharedPtr GetCurrentPath();
 
+  /** Writes the shared game-state mode to this controller's Blackboard. */
+  bool SetGhostMode(EGhostMode NewMode);
+
+  /** Stops the current move and makes the ghost face its opposite direction. */
+  void ReverseDirection();
+
 private:
   AGrid *GetGrid() const;
 
   void MoveInDirection(FVector Direction, float Speed = 0.1f);
 
+  /** Direction of the first step selected by the last grid path. */
+  FGridPosition LastPathDirection;
+  bool bHasLastPathDirection = false;
+
+  /** Set solely by a Scatter/Chase transition. */
+  bool bAllowReverseOnNextPath = false;
+
   mutable FNavPathSharedPtr CurrentPath;
+  uint8 LastPublishedGhostMode = MAX_uint8;
 };

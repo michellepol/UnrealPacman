@@ -33,8 +33,10 @@ void APacmanPlayer::SetupPlayerInputComponent(
         ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
             PlayerController->GetLocalPlayer());
 
-    Subsystem->ClearAllMappings();
-    Subsystem->AddMappingContext(InputMappingContext, 0);
+    if (Subsystem) {
+      Subsystem->ClearAllMappings();
+      Subsystem->AddMappingContext(InputMappingContext, 0);
+    }
   }
 
   UEnhancedInputComponent *Input =
@@ -42,6 +44,7 @@ void APacmanPlayer::SetupPlayerInputComponent(
 
   if (!Input) {
     UE_LOG(LogTemp, Display, TEXT("No enhanced input component"));
+    return;
   }
 
   if (MoveYAction) {

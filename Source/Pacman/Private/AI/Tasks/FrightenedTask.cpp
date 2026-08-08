@@ -2,15 +2,21 @@
 
 #include "AIController.h"
 
+#include "AI/GhostController.h"
+
 UAITask_Frigthened::UAITask_Frigthened() { NodeName = "Ghost Frightened"; }
 
 EBTNodeResult::Type
 UAITask_Frigthened::ExecuteTask(UBehaviorTreeComponent &OwnerComp,
                                 uint8 *NodeMemory) {
 
-  AAIController *AIController = OwnerComp.GetAIOwner();
+  AGhostController *GhostController =
+      Cast<AGhostController>(OwnerComp.GetAIOwner());
+  if (!GhostController || !GhostController->GetPawn()) {
+    return EBTNodeResult::Failed;
+  }
 
-  APawn *ControlledPawn = Cast<APawn>(AIController->GetOwner());
+  GhostController->FrigthenedMove();
 
   return EBTNodeResult::Type::Succeeded;
 }
